@@ -17,11 +17,11 @@
 This repository is dedicated to the Group 26 term project for the **Open Source Software Course, 2024**, at **Gachon University**. Our project involves applying various filters, such as mosaic effects, to photos using OpenCV. Through this project, we aim to explore image processing techniques in an open-source context.
 
 ## Team Members
-| Name    | GitHub Profile                                         |
-|---------|--------------------------------------------------------|
-| 송영빈   | [<img src="https://img.shields.io/badge/GitHub-songyb111--gachon-black?logo=github" alt="songyb111-gachon">](https://github.com/songyb111-gachon) |
-| 박준우   | [<img src="https://img.shields.io/badge/GitHub-cire21st-black?logo=github" alt="cire21st">](https://github.com/cire21st) |
-| 조수연   | [<img src="https://img.shields.io/badge/GitHub-yeun23-black?logo=github" alt="yeun23">](https://github.com/yeun23) |
+| Name    | GitHub Profile                                         | Email                                                |
+|---------|--------------------------------------------------------|------------------------------------------------------|
+| 송영빈   | [<img src="https://img.shields.io/badge/GitHub-songyb111--gachon-black?logo=github" alt="songyb111-gachon">](https://github.com/songyb111-gachon) | <img src="https://img.shields.io/badge/songyb111@gachon.ac.kr-blue" alt="songyb111@gachon.ac.kr"> |
+| 박준우   | [<img src="https://img.shields.io/badge/GitHub-cire21st-black?logo=github" alt="cire21st">](https://github.com/cire21st)               |                                                      |
+| 조수연   | [<img src="https://img.shields.io/badge/GitHub-yeun23-black?logo=github" alt="yeun23">](https://github.com/yeun23)                   |                                                      |
 
 ---
 

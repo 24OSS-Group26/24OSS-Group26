@@ -8,7 +8,6 @@
   <img src="https://img.shields.io/badge/License-MIT-yellow?logo=license&logoColor=white" alt="MIT License">
 </p>
 
----
 
 # 24OSS-Group26  
 **Applying Filters such as Mosaic to Photos with OpenCV**
@@ -23,7 +22,6 @@ This repository is dedicated to the Group 26 term project for the **Open Source 
 | 박준우   | [<img src="https://img.shields.io/badge/GitHub-cire21st-black?logo=github" alt="cire21st">](https://github.com/cire21st)               |                                                      |
 | 조수연   | [<img src="https://img.shields.io/badge/GitHub-yeun23-black?logo=github" alt="yeun23">](https://github.com/yeun23)                   |                                                      |
 
----
 
 ## Project Structure
 This repository includes:
@@ -57,7 +55,6 @@ This repository includes:
    cd src
    python main.py
    ```
----
 
 ## Features
 - **Mosaic Filter**: Apply a pixelation effect to blur parts or all of an image.

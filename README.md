@@ -4,7 +4,8 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white" alt="Python 3.12">
-  <img src="https://img.shields.io/badge/OpenCV-4.x-green?logo=opencv&logoColor=white" alt="OpenCV">
+  <img src="https://img.shields.io/badge/OpenCV-4.8.0-green?logo=opencv&logoColor=white" alt="OpenCV 4.8.0">
+  <img src="https://img.shields.io/badge/License-MIT-yellow?logo=license&logoColor=white" alt="MIT License">
 </p>
 
 ---

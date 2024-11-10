@@ -26,7 +26,7 @@ class FilterApp:
         self.root.rowconfigure(2, weight=1)
         self.root.columnconfigure(0, weight=1)
         ctk.set_appearance_mode("Dark")
-        ctk.set_default_color_theme("blue")
+        ctk.set_default_color_theme("blue")  # 기존 'blue' 테마 유지
 
         self.image = None
         self.cv_image = None
@@ -37,8 +37,8 @@ class FilterApp:
 
     def init_gui(self):
         # Title
-        title_label = ctk.CTkLabel(self.root, text="Photo Filter Application", font=("Helvetica", 28, "bold"),
-                                   text_color="#1abc9c")
+        title_label = ctk.CTkLabel(self.root, text="Photo Filter Application", font=("Arial", 28, "bold"),
+                                   text_color="#1abc9c")  # 제목 색상 유지
         title_label.grid(row=0, column=0, pady=10, sticky="n")
 
         # Top buttons (Open & Save)
@@ -49,22 +49,25 @@ class FilterApp:
         button_frame_top.columnconfigure(2, weight=1)
 
         btn_open = ctk.CTkButton(button_frame_top, text="Open Image", command=self.open_image, width=180,
-                                 fg_color="#27ae60")
+                                 fg_color="#27ae60")  # Open 버튼 색상 유지
         btn_open.grid(row=0, column=0, padx=15, pady=10, sticky="w")
 
         btn_save = ctk.CTkButton(button_frame_top, text="Save Image", command=self.save_image, width=180,
-                                 fg_color="#3498db")
+                                 fg_color="#3498db")  # Save 버튼 색상 유지
         btn_save.grid(row=0, column=2, padx=15, pady=10, sticky="e")
 
         # Canvas Frame
-        self.canvas_frame = ctk.CTkFrame(self.root, width=800, height=500, fg_color="transparent")
+        self.canvas_frame = ctk.CTkFrame(self.root, fg_color="transparent")
         self.canvas_frame.grid(row=2, column=0, pady=10, padx=20, sticky="nsew")
-        self.canvas = ctk.CTkCanvas(self.canvas_frame, bg="gray", bd=0, highlightthickness=0)
+        self.canvas = ctk.CTkCanvas(self.canvas_frame, bg="gray", bd=0, highlightthickness=0)  # 캔버스 색상 유지
         self.canvas.pack(fill="both", expand=True)
+
+        # Bind resize event
+        self.canvas_frame.bind("<Configure>", self.on_resize)
 
         # Current Filter Label
         self.filter_label = ctk.CTkLabel(self.root, text=f"Current Filter: {self.current_filter}",
-                                         font=("Helvetica", 16), text_color="#00d2d3")
+                                         font=("Arial", 16), text_color="#00d2d3")  # 필터 텍스트 색상 유지
         self.filter_label.grid(row=3, column=0, pady=5, sticky="n")
 
         # Filter Buttons
@@ -96,7 +99,7 @@ class FilterApp:
             )
 
         footer_label = ctk.CTkLabel(self.root, text="Tip: Open an image, apply a filter, and save it!",
-                                    font=("Helvetica", 14), text_color="#bdc3c7")
+                                    font=("Arial", 14), text_color="#bdc3c7")  # 푸터 텍스트 색상 유지
         footer_label.grid(row=5, column=0, pady=10, sticky="n")
 
     def open_image(self):
@@ -108,6 +111,7 @@ class FilterApp:
             self.original_image = cv2.imdecode(file_data, cv2.IMREAD_COLOR)
             if self.original_image is None:
                 raise ValueError("Failed to decode the image.")
+            self.original_file_path = file_path  # 파일 경로 저장
         except Exception as e:
             messagebox.showerror("Error", f"Failed to open the image: {e}")
             return
@@ -206,12 +210,26 @@ class FilterApp:
             messagebox.showwarning("Warning", "No filter applied!")
             return
 
+        # 파일명을 가져와서 적용된 필터를 추가한 새로운 이름 생성
+        if hasattr(self, 'original_file_path'):
+            original_name = self.original_file_path.split("/")[-1].split(".")[0]  # 파일명(확장자 제외)
+        else:
+            original_name = "image"  # 기본 이름
+
+        new_filename = f"{original_name}_{self.current_filter}.png"  # 필터 이름 포함 저장 파일명 생성
+
+        # 사용자에게 저장 위치 및 파일명 선택 요청
         file_path = filedialog.asksaveasfilename(defaultextension=".png",
+                                                 initialfile=new_filename,
                                                  filetypes=[("PNG files", "*.png"), ("JPEG files", "*.jpg")])
         if not file_path:
             return
-        cv2.imwrite(file_path, self.cv_image)
-        messagebox.showinfo("Info", "Image saved successfully!")
+        cv2.imwrite(file_path, self.cv_image)  # 저장
+        messagebox.showinfo("Info", f"Image saved successfully as {file_path}!")
+
+    def on_resize(self, event):
+        """Callback for dynamically resizing the canvas when the window size changes."""
+        self.display_image()
 
 
 if __name__ == "__main__":

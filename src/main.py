@@ -7,6 +7,8 @@ from filters.cartoon import apply_cartoon_filter
 from filters.sketch import apply_sketch_filter
 from filters.invert import apply_invert_filter
 from PIL import Image, ImageTk
+import numpy as np
+import os
 
 
 class FilterApp:
@@ -14,13 +16,13 @@ class FilterApp:
         self.root = root
         self.root.title("Photo Filter Application")
         self.root.geometry("900x750")
-        ctk.set_appearance_mode("Dark")  # 다크 모드
-        ctk.set_default_color_theme("blue")  # 테마 색상 설정
+        ctk.set_appearance_mode("Dark")  # Dark mode
+        ctk.set_default_color_theme("blue")  # Blue theme
 
         self.image = None
         self.cv_image = None
-        self.original_image = None  # 원본 이미지를 저장
-        self.current_filter = "None"  # 현재 적용된 필터 이름 저장
+        self.original_image = None  # Original image
+        self.current_filter = "None"  # Name of the current filter
 
         self.init_gui()
 
@@ -73,9 +75,18 @@ class FilterApp:
         if not file_path:
             return
 
-        self.original_image = cv2.imread(file_path)  # 원본 이미지 저장
-        self.cv_image = self.original_image.copy()  # 작업 이미지 초기화
-        self.current_filter = "None"  # 필터 초기화
+        # Load image using OpenCV with Unicode support
+        try:
+            file_data = np.fromfile(file_path, dtype=np.uint8)
+            self.original_image = cv2.imdecode(file_data, cv2.IMREAD_COLOR)
+            if self.original_image is None:
+                raise ValueError("Failed to decode the image.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to open the image: {e}")
+            return
+
+        self.cv_image = self.original_image.copy()  # Initialize working image
+        self.current_filter = "None"  # Reset filter
         self.update_filter_label()
         self.display_image()
 

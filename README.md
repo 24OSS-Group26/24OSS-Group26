@@ -102,6 +102,6 @@ Here are example images after applying the filter:
   <img src="README_img/2.png" alt="Filter Example 2">
   <img src="README_img/3.png" alt="Filter Example 3">
   <img src="README_img/4.png" alt="Filter Example 4">
-  <img src="README_img/gif/output.gif" alt="Filter Example gif">s
+  <img src="README_img/gif/output.gif" alt="Filter Example gif">
 </p>
 

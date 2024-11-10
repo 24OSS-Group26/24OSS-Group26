@@ -42,6 +42,11 @@ class FilterApp:
         button_frame_top = ctk.CTkFrame(self.root, fg_color="transparent")  # Transparent background
         button_frame_top.pack(pady=10, fill=ctk.X)
 
+        # Grid layout for buttons
+        button_frame_top.grid_columnconfigure(0, weight=1)  # Open Image on the left
+        button_frame_top.grid_columnconfigure(1, weight=1)  # Spacer
+        button_frame_top.grid_columnconfigure(2, weight=1)  # Save Image on the right
+
         # Open Image button (left)
         btn_open = ctk.CTkButton(button_frame_top, text="Open Image", command=self.open_image, width=180,
                                  fg_color="#27ae60")
@@ -50,7 +55,7 @@ class FilterApp:
         # Save Image button (right)
         btn_save = ctk.CTkButton(button_frame_top, text="Save Image", command=self.save_image, width=180,
                                  fg_color="#3498db")
-        btn_save.grid(row=0, column=1, padx=15, pady=10, sticky="e")
+        btn_save.grid(row=0, column=2, padx=15, pady=10, sticky="e")
 
         # Canvas Frame for displaying the image
         self.canvas_frame = ctk.CTkFrame(self.root, width=800, height=500, fg_color="transparent")

@@ -20,29 +20,44 @@ class FilterApp:
         self.init_gui()
 
     def init_gui(self):
-        frame = tk.Frame(self.root)
-        frame.pack(side=tk.TOP, fill=tk.X)
+        # Main frame
+        main_frame = tk.Frame(self.root, bg="#2c3e50")
+        main_frame.pack(fill=tk.BOTH, expand=True)
 
-        btn_open = tk.Button(frame, text="Open Image", command=self.open_image)
+        # Title label
+        title_label = tk.Label(main_frame, text="Photo Filter Application", bg="#34495e", fg="white",
+                               font=("Helvetica", 16, "bold"), pady=10)
+        title_label.pack(fill=tk.X)
+
+        # Canvas for image display
+        self.canvas = tk.Canvas(main_frame, width=800, height=500, bg="#ecf0f1", bd=0, highlightthickness=0)
+        self.canvas.pack(pady=10)
+
+        # Button frame
+        button_frame = tk.Frame(main_frame, bg="#2c3e50")
+        button_frame.pack(fill=tk.X, pady=10)
+
+        # Button styles
+        button_style = {"bg": "#2980b9", "fg": "white", "font": ("Helvetica", 12), "width": 15, "relief": "raised"}
+
+        # Buttons
+        btn_open = tk.Button(button_frame, text="Open Image", command=self.open_image, **button_style)
         btn_open.pack(side=tk.LEFT, padx=5, pady=5)
 
-        btn_mosaic = tk.Button(frame, text="Mosaic Filter", command=self.apply_mosaic_filter)
+        btn_mosaic = tk.Button(button_frame, text="Mosaic Filter", command=self.apply_mosaic_filter, **button_style)
         btn_mosaic.pack(side=tk.LEFT, padx=5, pady=5)
 
-        btn_cartoon = tk.Button(frame, text="Cartoon Filter", command=self.apply_cartoon_filter)
+        btn_cartoon = tk.Button(button_frame, text="Cartoon Filter", command=self.apply_cartoon_filter, **button_style)
         btn_cartoon.pack(side=tk.LEFT, padx=5, pady=5)
 
-        btn_sketch = tk.Button(frame, text="Sketch Filter", command=self.apply_sketch_filter)
+        btn_sketch = tk.Button(button_frame, text="Sketch Filter", command=self.apply_sketch_filter, **button_style)
         btn_sketch.pack(side=tk.LEFT, padx=5, pady=5)
 
-        btn_invert = tk.Button(frame, text="Invert Filter", command=self.apply_invert_filter)
+        btn_invert = tk.Button(button_frame, text="Invert Filter", command=self.apply_invert_filter, **button_style)
         btn_invert.pack(side=tk.LEFT, padx=5, pady=5)
 
-        btn_save = tk.Button(frame, text="Save Image", command=self.save_image)
+        btn_save = tk.Button(button_frame, text="Save Image", command=self.save_image, **button_style)
         btn_save.pack(side=tk.LEFT, padx=5, pady=5)
-
-        self.canvas = tk.Canvas(self.root, width=600, height=400, bg="gray")
-        self.canvas.pack(fill=tk.BOTH, expand=True)
 
     def open_image(self):
         file_path = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg;*.png;*.jpeg")])
@@ -57,9 +72,9 @@ class FilterApp:
         if self.cv_image is not None:
             rgb_image = cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2RGB)
             image = Image.fromarray(rgb_image)
-            image.thumbnail((600, 400))
+            image.thumbnail((800, 500))
             self.image = ImageTk.PhotoImage(image)
-            self.canvas.create_image(300, 200, image=self.image)
+            self.canvas.create_image(400, 250, image=self.image)
 
     def apply_mosaic_filter(self):
         if self.original_image is None:

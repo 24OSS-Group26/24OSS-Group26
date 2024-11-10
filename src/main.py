@@ -34,12 +34,12 @@ class FilterApp:
 
     def init_gui(self):
         # Title
-        title_label = ctk.CTkLabel(self.root, text="Photo Filter Application", font=("Helvetica", 24, "bold"))
-        title_label.pack(pady=10)
+        title_label = ctk.CTkLabel(self.root, text="Photo Filter Application", font=("Helvetica", 28, "bold"), text_color="#1abc9c")
+        title_label.pack(pady=20)
 
         # Canvas Frame
         self.canvas_frame = ctk.CTkFrame(self.root, width=800, height=500)
-        self.canvas_frame.pack(fill="both", expand=True, pady=10)
+        self.canvas_frame.pack(fill="both", expand=True, pady=10, padx=20)
         self.canvas = ctk.CTkCanvas(self.canvas_frame, bg="gray", bd=0, highlightthickness=0)
         self.canvas.pack(fill="both", expand=True, padx=10, pady=10)
 
@@ -50,11 +50,11 @@ class FilterApp:
 
         # Button frame
         button_frame = ctk.CTkFrame(self.root)
-        button_frame.pack(pady=10, fill=ctk.BOTH)
+        button_frame.pack(pady=10, padx=20, fill=ctk.BOTH)
 
         # Open Image button
-        btn_open = ctk.CTkButton(button_frame, text="Open Image", command=self.open_image, width=150, fg_color="#27ae60")
-        btn_open.grid(row=0, column=0, padx=10, pady=10, columnspan=2)  # 강조를 위해 크기와 위치 변경
+        btn_open = ctk.CTkButton(button_frame, text="Open Image", command=self.open_image, width=180, fg_color="#27ae60")
+        btn_open.grid(row=0, column=0, padx=15, pady=10)
 
         # Add buttons for each filter
         filters = [
@@ -72,16 +72,16 @@ class FilterApp:
         ]
 
         for i, (text, command) in enumerate(filters):
-            ctk.CTkButton(button_frame, text=f"{text} Filter", command=command, width=120).grid(row=(i // 6) + 1, column=i % 6, padx=10, pady=10)
+            ctk.CTkButton(button_frame, text=f"{text} Filter", command=command, width=150).grid(row=(i // 4) + 1, column=i % 4, padx=15, pady=10)
 
         # Save Image button
-        btn_save = ctk.CTkButton(button_frame, text="Save Image", command=self.save_image, width=120, fg_color="#3498db")
-        btn_save.grid(row=(len(filters) // 6) + 2, column=0, padx=10, pady=10, columnspan=2)
+        btn_save = ctk.CTkButton(button_frame, text="Save Image", command=self.save_image, width=180, fg_color="#3498db")
+        btn_save.grid(row=(len(filters) // 4) + 2, column=0, padx=15, pady=10)
 
         # Footer help text
         footer_label = ctk.CTkLabel(self.root, text="Tip: Open an image, apply a filter, and save it!",
                                     font=("Helvetica", 14), text_color="#bdc3c7")
-        footer_label.pack(side=ctk.BOTTOM, pady=20)
+        footer_label.pack(side=ctk.BOTTOM, pady=10)
 
     def open_image(self):
         file_path = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg;*.png;*.jpeg")])

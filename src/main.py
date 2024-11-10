@@ -22,6 +22,8 @@ class FilterApp:
         self.root = root
         self.root.title("Photo Filter Application")
         self.root.geometry("1000x800")
+        self.root.rowconfigure(2, weight=1)  # Adjust grid for filter buttons
+        self.root.columnconfigure(0, weight=1)  # Center elements horizontally
         ctk.set_appearance_mode("Dark")  # Dark mode
         ctk.set_default_color_theme("blue")  # Blue theme
 
@@ -36,16 +38,14 @@ class FilterApp:
         # Title
         title_label = ctk.CTkLabel(self.root, text="Photo Filter Application", font=("Helvetica", 28, "bold"),
                                    text_color="#1abc9c")
-        title_label.pack(pady=20)
+        title_label.grid(row=0, column=0, pady=10, sticky="n")
 
         # Top buttons (Open & Save)
-        button_frame_top = ctk.CTkFrame(self.root, fg_color="transparent")  # Transparent background
-        button_frame_top.pack(pady=10, fill=ctk.X)
-
-        # Grid layout for buttons
-        button_frame_top.grid_columnconfigure(0, weight=1)  # Open Image on the left
-        button_frame_top.grid_columnconfigure(1, weight=1)  # Spacer
-        button_frame_top.grid_columnconfigure(2, weight=1)  # Save Image on the right
+        button_frame_top = ctk.CTkFrame(self.root, fg_color="transparent")
+        button_frame_top.grid(row=1, column=0, pady=5, sticky="ew")
+        button_frame_top.columnconfigure(0, weight=1)  # Open Image on the left
+        button_frame_top.columnconfigure(1, weight=1)  # Spacer
+        button_frame_top.columnconfigure(2, weight=1)  # Save Image on the right
 
         # Open Image button (left)
         btn_open = ctk.CTkButton(button_frame_top, text="Open Image", command=self.open_image, width=180,
@@ -59,20 +59,21 @@ class FilterApp:
 
         # Canvas Frame for displaying the image
         self.canvas_frame = ctk.CTkFrame(self.root, width=800, height=500, fg_color="transparent")
-        self.canvas_frame.pack(fill="both", expand=True, pady=10, padx=20)
+        self.canvas_frame.grid(row=2, column=0, pady=10, padx=20, sticky="nsew")
         self.canvas = ctk.CTkCanvas(self.canvas_frame, bg="gray", bd=0, highlightthickness=0)
-        self.canvas.pack(fill="both", expand=True, padx=10, pady=10)
+        self.canvas.pack(fill="both", expand=True)
 
         # Label for current filter information
         self.filter_label = ctk.CTkLabel(self.root, text=f"Current Filter: {self.current_filter}",
                                          font=("Helvetica", 16), text_color="#00d2d3")
-        self.filter_label.pack(pady=10)
+        self.filter_label.grid(row=3, column=0, pady=5, sticky="n")
 
         # Centralized button frame for filter buttons
         button_frame = ctk.CTkFrame(self.root, fg_color="transparent")
-        button_frame.pack(pady=10, padx=20, fill=ctk.BOTH)
+        button_frame.grid(row=4, column=0, pady=10, sticky="ew")
+        button_frame.columnconfigure((0, 1, 2, 3, 4), weight=1)  # Equal weight for 5 columns
 
-        # Add buttons for each filter (15 filters arranged in 3x5 grid)
+        # Add buttons for each filter (3x5 layout with dynamic resizing)
         filters = [
             ("Mosaic", self.apply_mosaic_filter),
             ("Grayscale", self.apply_grayscale_filter),
@@ -86,21 +87,21 @@ class FilterApp:
             ("Saturation", self.apply_saturation_filter),
             ("HDR", self.apply_hdr_filter),
             ("Vignette", self.apply_vignette_filter),
-            ("추가1", self.apply_additional_filter1),  # New filter
-            ("추가2", self.apply_additional_filter2),  # New filter
-            ("추가3", self.apply_additional_filter3),  # New filter
+            ("추가1", self.apply_additional_filter1),
+            ("추가2", self.apply_additional_filter2),
+            ("추가3", self.apply_additional_filter3),
         ]
 
-        # 3x5 Grid Layout
+        # Dynamically create 3 rows and 5 columns
         for i, (text, command) in enumerate(filters):
-            ctk.CTkButton(button_frame, text=f"{text} Filter", command=command, width=150).grid(
-                row=i // 5, column=i % 5, padx=15, pady=10, sticky="nsew"
+            ctk.CTkButton(button_frame, text=f"{text} Filter", command=command).grid(
+                row=i // 5, column=i % 5, padx=10, pady=5, sticky="nsew"
             )
 
         # Footer help text
         footer_label = ctk.CTkLabel(self.root, text="Tip: Open an image, apply a filter, and save it!",
                                     font=("Helvetica", 14), text_color="#bdc3c7")
-        footer_label.pack(side=ctk.BOTTOM, pady=10)
+        footer_label.grid(row=5, column=0, pady=10, sticky="n")
 
     def open_image(self):
         file_path = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg;*.png;*.jpeg")])
@@ -149,10 +150,10 @@ class FilterApp:
         if self.original_image is None:
             messagebox.showwarning("Warning", "Open an image first!")
             return
-        if self.current_filter == filter_name:  # Cancel the filter if already applied
+        if self.current_filter == filter_name:
             self.cv_image = self.original_image.copy()
             self.current_filter = "None"
-        else:  # Apply the new filter
+        else:
             self.cv_image = filter_function(self.original_image.copy())
             self.current_filter = filter_name
         self.update_filter_label()
@@ -195,7 +196,6 @@ class FilterApp:
     def apply_vignette_filter(self):
         self.apply_filter(apply_vignette, "Vignette")
 
-    # Placeholder filters for 추가1, 추가2, 추가3
     def apply_additional_filter1(self):
         self.apply_filter(lambda img: img, "추가1")
 
@@ -213,11 +213,9 @@ class FilterApp:
             messagebox.showwarning("Warning", "No filter applied!")
             return
 
-        # Use the original filename stored after opening the image
-        original_name = self.original_filename.split("/")[-1].split(".")[0]  # Get the name without extension
+        original_name = self.original_filename.split("/")[-1].split(".")[0]
         new_filename = f"{original_name}_{self.current_filter}.png"
 
-        # Ask the user to save with the generated name
         file_path = filedialog.asksaveasfilename(defaultextension=".png",
                                                  initialfile=new_filename,
                                                  filetypes=[("PNG files", "*.png"), ("JPEG files", "*.jpg")])

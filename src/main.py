@@ -11,7 +11,7 @@ from filters.edge_detection import apply_edge_detection
 from filters.sepia import apply_sepia
 from filters.brightness import apply_brightness
 from filters.saturation import apply_saturation
-from filters.hdr_effect import apply_hdr_effect
+from filters.hdr_effect import apply_hdr_effecta
 from filters.vignette import apply_vignette
 from PIL import Image, ImageTk
 import numpy as np

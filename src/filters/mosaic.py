@@ -1,25 +1,64 @@
 import cv2
+import mediapipe as mp
+import numpy as np
 
-def apply_mosaic_to_faces(image, scale=15, cascade_path="haarcascade_frontalface_default.xml"):
-    # Load Haar cascade for face detection
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + cascade_path)
 
-    # Convert the image to grayscale for face detection
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+def apply_mosaic_to_faces(image, scale=15):
+    """
+    Apply a mosaic filter to detected faces in an image using Mediapipe Face Detection.
 
-    # Detect faces in the image
-    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+    Parameters:
+        image (numpy.ndarray): Input image in BGR format.
+        scale (int): The scale factor for the mosaic effect. Higher values result in more pixelation.
 
-    # Apply mosaic to each detected face
-    for (x, y, w, h) in faces:
-        # Extract the face region
-        face_region = image[y:y + h, x:x + w]
+    Returns:
+        numpy.ndarray: Image with mosaic applied to detected faces.
+    """
+    if not isinstance(image, np.ndarray):
+        raise TypeError("Input image must be a numpy.ndarray.")
+    if scale < 1:
+        raise ValueError("Scale must be greater than or equal to 1.")
 
-        # Apply mosaic to the face region
-        face_region = cv2.resize(face_region, (w // scale, h // scale), interpolation=cv2.INTER_LINEAR)
-        face_region = cv2.resize(face_region, (w, h), interpolation=cv2.INTER_NEAREST)
+    # Initialize Mediapipe Face Detection
+    mp_face_detection = mp.solutions.face_detection
+    face_detection = mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.5)
 
-        # Replace the face region with the mosaic version
-        image[y:y + h, x:x + w] = face_region
+    # Convert the image to RGB (Mediapipe requires RGB format)
+    rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+    # Perform face detection
+    results = face_detection.process(rgb_image)
+
+    # If faces are detected, apply mosaic
+    if results.detections:
+        for detection in results.detections:
+            try:
+                # Get bounding box coordinates
+                bboxC = detection.location_data.relative_bounding_box
+                ih, iw, _ = image.shape
+                x = int(bboxC.xmin * iw)
+                y = int(bboxC.ymin * ih)
+                w = int(bboxC.width * iw)
+                h = int(bboxC.height * ih)
+
+                # Ensure coordinates are within image bounds
+                x, y = max(0, x), max(0, y)
+                x2, y2 = min(iw, x + w), min(ih, y + h)
+
+                # Extract the face region
+                face_region = image[y:y2, x:x2]
+
+                # Apply mosaic to the face region
+                if face_region.size > 0:  # Avoid processing empty regions
+                    face_region = cv2.resize(face_region, ((x2 - x) // scale, (y2 - y) // scale), interpolation=cv2.INTER_LINEAR)
+                    face_region = cv2.resize(face_region, (x2 - x, y2 - y), interpolation=cv2.INTER_NEAREST)
+
+                    # Replace the face region with the mosaic version
+                    image[y:y2, x:x2] = face_region
+            except Exception as e:
+                print(f"Error applying mosaic to a face: {e}")
+
+    # Release Mediapipe resources
+    face_detection.close()
 
     return image

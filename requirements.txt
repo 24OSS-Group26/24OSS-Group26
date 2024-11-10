@@ -1,3 +1,4 @@
 opencv-python==4.8.0.76
-numpy
 Pillow
+customtkinter
+numpy

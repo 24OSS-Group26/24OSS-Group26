@@ -11,7 +11,7 @@ from filters.edge_detection import apply_edge_detection
 from filters.sepia import apply_sepia
 from filters.brightness import apply_brightness
 from filters.saturation import apply_saturation
-from filters.hdr_effect import apply_hdr_effecta
+from filters.hdr_effect import apply_hdr_effect
 from filters.vignette import apply_vignette
 from PIL import Image, ImageTk
 import numpy as np
@@ -59,6 +59,7 @@ class FilterApp:
         # Add buttons for each filter
         filters = [
             ("Mosaic", self.apply_mosaic_filter),
+            ("Grayscale", self.apply_grayscale_filter),  # Grayscale 추가
             ("Cartoon", self.apply_cartoon_filter),
             ("Sketch", self.apply_sketch_filter),
             ("Invert", self.apply_invert_filter),
@@ -137,6 +138,9 @@ class FilterApp:
 
     def apply_mosaic_filter(self):
         self.apply_filter(apply_mosaic_to_faces, "Mosaic")
+
+    def apply_grayscale_filter(self):  # Grayscale 추가
+        self.apply_filter(apply_grayscale, "Grayscale")
 
     def apply_cartoon_filter(self):
         self.apply_filter(apply_cartoon_filter, "Cartoon")

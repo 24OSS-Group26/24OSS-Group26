@@ -3,25 +3,23 @@ import mediapipe as mp
 import numpy as np
 
 
-def apply_mosaic_to_faces(image, scale=15):
+def apply_mosaic_to_faces(image, scale=5):
     """
-    Apply a mosaic filter to detected faces in an image using Mediapipe Face Detection.
+    Apply a strong mosaic filter to detected faces in an image using Mediapipe Face Detection.
 
     Parameters:
         image (numpy.ndarray): Input image in BGR format.
-        scale (int): The scale factor for the mosaic effect. Higher values result in more pixelation.
+        scale (int): The scale factor for the mosaic effect (fixed to a strong value).
 
     Returns:
-        numpy.ndarray: Image with mosaic applied to detected faces.
+        numpy.ndarray: Image with strong mosaic applied to detected faces.
     """
     if not isinstance(image, np.ndarray):
         raise TypeError("Input image must be a numpy.ndarray.")
-    if scale < 1:
-        raise ValueError("Scale must be greater than or equal to 1.")
 
     # Initialize Mediapipe Face Detection
     mp_face_detection = mp.solutions.face_detection
-    face_detection = mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.5)
+    face_detection = mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.7)
 
     # Convert the image to RGB (Mediapipe requires RGB format)
     rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -48,9 +46,10 @@ def apply_mosaic_to_faces(image, scale=15):
                 # Extract the face region
                 face_region = image[y:y2, x:x2]
 
-                # Apply mosaic to the face region
+                # Apply strong mosaic to the face region
                 if face_region.size > 0:  # Avoid processing empty regions
-                    face_region = cv2.resize(face_region, ((x2 - x) // scale, (y2 - y) // scale), interpolation=cv2.INTER_LINEAR)
+                    # Force strong mosaic with a fixed low-resolution resize
+                    face_region = cv2.resize(face_region, (10, 10), interpolation=cv2.INTER_LINEAR)
                     face_region = cv2.resize(face_region, (x2 - x, y2 - y), interpolation=cv2.INTER_NEAREST)
 
                     # Replace the face region with the mosaic version

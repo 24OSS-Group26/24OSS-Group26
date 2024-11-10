@@ -37,29 +37,37 @@ class FilterApp:
         title_label = ctk.CTkLabel(self.root, text="Photo Filter Application", font=("Helvetica", 28, "bold"), text_color="#1abc9c")
         title_label.pack(pady=20)
 
-        # Canvas Frame
-        self.canvas_frame = ctk.CTkFrame(self.root, width=800, height=500)
+        # Top buttons (Open & Save)
+        button_frame_top = ctk.CTkFrame(self.root, fg_color="transparent")  # Transparent background
+        button_frame_top.pack(pady=10, fill=ctk.X)
+
+        # Open Image button (left)
+        btn_open = ctk.CTkButton(button_frame_top, text="Open Image", command=self.open_image, width=180, fg_color="#27ae60")
+        btn_open.grid(row=0, column=0, padx=15, pady=10, sticky="w")
+
+        # Save Image button (right)
+        btn_save = ctk.CTkButton(button_frame_top, text="Save Image", command=self.save_image, width=180, fg_color="#3498db")
+        btn_save.grid(row=0, column=1, padx=15, pady=10, sticky="e")
+
+        # Canvas Frame for displaying the image
+        self.canvas_frame = ctk.CTkFrame(self.root, width=800, height=500, fg_color="transparent")
         self.canvas_frame.pack(fill="both", expand=True, pady=10, padx=20)
         self.canvas = ctk.CTkCanvas(self.canvas_frame, bg="gray", bd=0, highlightthickness=0)
         self.canvas.pack(fill="both", expand=True, padx=10, pady=10)
 
-        # Label for filter info
+        # Label for current filter information
         self.filter_label = ctk.CTkLabel(self.root, text=f"Current Filter: {self.current_filter}",
                                          font=("Helvetica", 16), text_color="#00d2d3")
         self.filter_label.pack(pady=10)
 
-        # Button frame
-        button_frame = ctk.CTkFrame(self.root)
+        # Centralized button frame for filter buttons
+        button_frame = ctk.CTkFrame(self.root, fg_color="transparent")
         button_frame.pack(pady=10, padx=20, fill=ctk.BOTH)
-
-        # Open Image button
-        btn_open = ctk.CTkButton(button_frame, text="Open Image", command=self.open_image, width=180, fg_color="#27ae60")
-        btn_open.grid(row=0, column=0, padx=15, pady=10)
 
         # Add buttons for each filter
         filters = [
             ("Mosaic", self.apply_mosaic_filter),
-            ("Grayscale", self.apply_grayscale_filter),  # Grayscale 추가
+            ("Grayscale", self.apply_grayscale_filter),
             ("Cartoon", self.apply_cartoon_filter),
             ("Sketch", self.apply_sketch_filter),
             ("Invert", self.apply_invert_filter),
@@ -72,12 +80,9 @@ class FilterApp:
             ("Vignette", self.apply_vignette_filter),
         ]
 
+        # Centralized filter buttons using grid
         for i, (text, command) in enumerate(filters):
-            ctk.CTkButton(button_frame, text=f"{text} Filter", command=command, width=150).grid(row=(i // 4) + 1, column=i % 4, padx=15, pady=10)
-
-        # Save Image button
-        btn_save = ctk.CTkButton(button_frame, text="Save Image", command=self.save_image, width=180, fg_color="#3498db")
-        btn_save.grid(row=(len(filters) // 4) + 2, column=0, padx=15, pady=10)
+            ctk.CTkButton(button_frame, text=f"{text} Filter", command=command, width=150).grid(row=(i // 4) + 1, column=i % 4, padx=15, pady=10, sticky="nsew")
 
         # Footer help text
         footer_label = ctk.CTkLabel(self.root, text="Tip: Open an image, apply a filter, and save it!",
@@ -139,7 +144,7 @@ class FilterApp:
     def apply_mosaic_filter(self):
         self.apply_filter(apply_mosaic_to_faces, "Mosaic")
 
-    def apply_grayscale_filter(self):  # Grayscale 추가
+    def apply_grayscale_filter(self):
         self.apply_filter(apply_grayscale, "Grayscale")
 
     def apply_cartoon_filter(self):

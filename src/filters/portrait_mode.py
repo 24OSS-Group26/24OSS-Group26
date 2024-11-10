@@ -3,7 +3,7 @@ import numpy as np
 import mediapipe as mp
 
 
-def apply_Portrait_Mode(image):
+def apply_portrait_mode(image):
     """
     Blur all areas except detected persons (body) in the image.
 

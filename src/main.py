@@ -13,7 +13,7 @@ from filters.brightness import apply_brightness
 from filters.saturation import apply_saturation
 from filters.hdr_effect import apply_hdr_effect
 from filters.vignette import apply_vignette
-from filters.Portrait_Mode import apply_Portrait_Mode  # 새 필터 추가
+from filters.portrait_mode import apply_portrait_mode
 from PIL import Image, ImageTk
 import numpy as np
 
@@ -194,7 +194,7 @@ class FilterApp:
         self.apply_filter(apply_vignette, "Vignette")
 
     def apply_portrait_mode(self):
-        self.apply_filter(apply_Portrait_Mode, "Portrait Mode")  # Link the new filter
+        self.apply_filter(apply_portrait_mode, "Portrait Mode")  # Link the new filter
 
     def apply_additional_filter2(self):
         self.apply_filter(lambda img: img, "추가2")

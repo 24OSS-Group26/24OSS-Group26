@@ -20,61 +20,9 @@
 
 ## 5. **총 필터 개수는 15개로 5x3 으로 하면 좋을 거 같습니다**
 - 수정 사항: 지금 만들어둔 필터가 12개라서 추가할 3개는 얼굴이나 사람 인식 기능이 들어간 필터면 좋을 거 같습니다.
-  - **얼굴 인식 관련 코드** (코드는 아래와 mosaic.py 참고)
-
-### Mediapipe 기반 얼굴 인식 코드 통합
-'''
-import mediapipe as mp
-import cv2
-import numpy as np
-
-def detect_faces(image):
-    """
-    Detect faces in an image using Mediapipe Face Detection.
-
-    Parameters:
-        image (numpy.ndarray): Input image in BGR format.
-
-    Returns:
-        list: A list of detected face bounding boxes in (x, y, width, height) format.
-    """
-    if not isinstance(image, np.ndarray):
-        raise TypeError("Input image must be a numpy.ndarray.")
-
-    # Initialize Mediapipe Face Detection
-    mp_face_detection = mp.solutions.face_detection
-    face_detection = mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.7)
-
-    # Convert the image to RGB (Mediapipe requires RGB format)
-    rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
-    # Perform face detection
-    results = face_detection.process(rgb_image)
-
-    faces = []
-    if results.detections:
-        for detection in results.detections:
-            # Get bounding box coordinates
-            bboxC = detection.location_data.relative_bounding_box
-            ih, iw, _ = image.shape
-            x = int(bboxC.xmin * iw)
-            y = int(bboxC.ymin * ih)
-            w = int(bboxC.width * iw)
-            h = int(bboxC.height * ih)
-
-            # Ensure coordinates are within image bounds
-            x, y = max(0, x), max(0, y)
-            w, h = min(iw - x, w), min(ih - y, h)
-
-            faces.append((x, y, w, h))
-
-    # Release Mediapipe resources
-    face_detection.close()
-
-    return faces
-'''
+  - **얼굴, 사람 인식 관련 코드는 아래와 mosaic.py와 portrait_mode.py 코드 참고!
 
 **추가 필터 아이디어:**
-1. Blur Background, Focus on 사람. (인물모드 느낌)
+1. ~~Blur Background, Focus on 사람. (인물모드 느낌)~~
 2. ~
 3. ~

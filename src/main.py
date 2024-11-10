@@ -103,6 +103,9 @@ class FilterApp:
             messagebox.showerror("Error", f"Failed to open the image: {e}")
             return
 
+        # Store the original file path
+        self.original_filename = file_path
+
         self.cv_image = self.original_image.copy()
         self.current_filter = "None"
         self.update_filter_label()
@@ -181,7 +184,22 @@ class FilterApp:
         if self.cv_image is None:
             messagebox.showwarning("Warning", "No image to save!")
             return
+        if self.current_filter == "None":
+            messagebox.showwarning("Warning", "No filter applied!")
+            return
+
+        # Use the original filename stored after opening the image
+        if self.original_image is None:
+            messagebox.showwarning("Warning", "No image to save!")
+            return
+
+        # Combine the original file name and applied filter
+        original_name = self.original_filename.split("/")[-1].split(".")[0]  # Get the name without extension
+        new_filename = f"{original_name}_{self.current_filter}.png"
+
+        # Ask the user to save with the generated name
         file_path = filedialog.asksaveasfilename(defaultextension=".png",
+                                                 initialfile=new_filename,
                                                  filetypes=[("PNG files", "*.png"), ("JPEG files", "*.jpg")])
         if not file_path:
             return

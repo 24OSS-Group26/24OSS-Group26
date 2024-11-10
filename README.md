@@ -98,9 +98,10 @@ Run the `main.py` script in the `src` folder to select and apply various filters
 Here are example images after applying the filter:
 
 <p align="center">
-  <img src="REAME_img/1.png" alt="Filter Example 1">
-  <img src="REAME_img/2.png" alt="Filter Example 2">
-  <img src="REAME_img/3.png" alt="Filter Example 3">
-  <img src="REAME_img/4.png" alt="Filter Example 4">
+  <img src="README_img/1.png" alt="Filter Example 1">
+  <img src="README_img/2.png" alt="Filter Example 2">
+  <img src="README_img/3.png" alt="Filter Example 3">
+  <img src="README_img/4.png" alt="Filter Example 4">
+  <img src="README_img/gif/output.gif" alt="Filter Example gif">
 </p>
 

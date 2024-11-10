@@ -1,8 +1,11 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import cv2
-from filters.mosaic import apply_mosaic
+from filters.mosaic import apply_mosaic_to_faces
 from filters.grayscale import apply_grayscale
+from filters.cartoon import apply_cartoon_filter
+from filters.sketch import apply_sketch_filter
+from filters.invert import apply_invert_filter
 from PIL import Image, ImageTk
 
 
@@ -17,7 +20,6 @@ class FilterApp:
         self.init_gui()
 
     def init_gui(self):
-        # Frame for buttons
         frame = tk.Frame(self.root)
         frame.pack(side=tk.TOP, fill=tk.X)
 
@@ -27,13 +29,18 @@ class FilterApp:
         btn_mosaic = tk.Button(frame, text="Mosaic Filter", command=self.apply_mosaic_filter)
         btn_mosaic.pack(side=tk.LEFT, padx=5, pady=5)
 
-        btn_grayscale = tk.Button(frame, text="Grayscale Filter", command=self.apply_grayscale_filter)
-        btn_grayscale.pack(side=tk.LEFT, padx=5, pady=5)
+        btn_cartoon = tk.Button(frame, text="Cartoon Filter", command=self.apply_cartoon_filter)
+        btn_cartoon.pack(side=tk.LEFT, padx=5, pady=5)
+
+        btn_sketch = tk.Button(frame, text="Sketch Filter", command=self.apply_sketch_filter)
+        btn_sketch.pack(side=tk.LEFT, padx=5, pady=5)
+
+        btn_invert = tk.Button(frame, text="Invert Filter", command=self.apply_invert_filter)
+        btn_invert.pack(side=tk.LEFT, padx=5, pady=5)
 
         btn_save = tk.Button(frame, text="Save Image", command=self.save_image)
         btn_save.pack(side=tk.LEFT, padx=5, pady=5)
 
-        # Canvas to display the image
         self.canvas = tk.Canvas(self.root, width=600, height=400, bg="gray")
         self.canvas.pack(fill=tk.BOTH, expand=True)
 
@@ -48,7 +55,6 @@ class FilterApp:
 
     def display_image(self):
         if self.cv_image is not None:
-            # Convert to RGB and resize for display
             rgb_image = cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2RGB)
             image = Image.fromarray(rgb_image)
             image.thumbnail((600, 400))
@@ -59,14 +65,28 @@ class FilterApp:
         if self.original_image is None:
             messagebox.showwarning("Warning", "Open an image first!")
             return
-        self.cv_image = apply_mosaic(self.original_image.copy())  # 원본 이미지를 기준으로 필터 적용
+        self.cv_image = apply_mosaic_to_faces(self.original_image.copy())
         self.display_image()
 
-    def apply_grayscale_filter(self):
+    def apply_cartoon_filter(self):
         if self.original_image is None:
             messagebox.showwarning("Warning", "Open an image first!")
             return
-        self.cv_image = apply_grayscale(self.original_image.copy())  # 원본 이미지를 기준으로 필터 적용
+        self.cv_image = apply_cartoon_filter(self.original_image.copy())
+        self.display_image()
+
+    def apply_sketch_filter(self):
+        if self.original_image is None:
+            messagebox.showwarning("Warning", "Open an image first!")
+            return
+        self.cv_image = apply_sketch_filter(self.original_image.copy())
+        self.display_image()
+
+    def apply_invert_filter(self):
+        if self.original_image is None:
+            messagebox.showwarning("Warning", "Open an image first!")
+            return
+        self.cv_image = apply_invert_filter(self.original_image.copy())
         self.display_image()
 
     def save_image(self):

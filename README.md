@@ -101,5 +101,6 @@ Here are example images after applying the filter:
   <img src="REAME_img/1.png" alt="Filter Example 1">
   <img src="REAME_img/2.png" alt="Filter Example 2">
   <img src="REAME_img/3.png" alt="Filter Example 3">
+  <img src="REAME_img/4.png" alt="Filter Example 4">
 </p>
 

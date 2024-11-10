@@ -2,7 +2,7 @@ from PIL import Image
 import os
 
 
-def create_gif(image_folder, output_gif_path, duration=500):
+def create_gif(image_folder, output_gif_path, duration=600):
     # 현재 폴더에 있는 모든 .png 파일을 가져옵니다.
     image_files = [f"{i}.png" for i in range(1, 18)]  # 1.png부터 17.png까지 예시 (필요에 따라 범위 조정)
 

@@ -24,10 +24,41 @@ This repository is dedicated to the Group 26 term project for the **Open Source 
 
 
 ## Project Structure
-This repository includes:
-- **Source Code**: Python scripts in the `src` folder, where `main.py` allows users to select from a variety of filters and apply them to images.
-- **Documentation**: Explanations of the applied filters and how to use the provided code.
-- **Sample Images**: Example images demonstrating the filter effects.
+The directory structure for this repository is as follows:
+
+<pre>
+24OSS-Group26/
+├── src/
+│   ├── filters/                  # Contains Python scripts for each filter
+│   │   ├── blur.py               # Blur filter
+│   │   ├── brightness.py         # Brightness adjustment filter
+│   │   ├── cartoon.py            # Cartoon filter
+│   │   ├── edge_detection.py     # Edge detection filter
+│   │   ├── grayscale.py          # Grayscale filter
+│   │   ├── hdr_effect.py         # HDR effect filter
+│   │   ├── invert.py             # Invert colors filter
+│   │   ├── mosaic.py             # Mosaic (pixelation) filter
+│   │   ├── saturation.py         # Saturation adjustment filter
+│   │   ├── sepia.py              # Sepia tone filter
+│   │   ├── sketch.py             # Sketch effect filter
+│   │   └── vignette.py           # Vignette effect filter
+│   └── main.py                   # Main script for filter selection and application
+├── test_img/                     # Directory containing sample images
+├── .venv/                         # Virtual environment directory
+├── requirements.txt              # List of dependencies (Python and OpenCV)
+├── README.md                     # Project documentation
+└── LICENSE                       # License information
+</pre>
+
+- **`src/filters/`**: Contains Python scripts for various image processing filters like blur, brightness adjustment, cartoon effect, etc.
+- **`src/main.py`**: The main script that allows users to apply the filters.
+- **`test_img/`**: A directory for storing sample images to demonstrate the effects of the filters.
+- **`.venv/`**: Virtual environment to manage dependencies.
+- **`requirements.txt`**: A file that lists all required Python libraries for the project.
+- **`README.md`**: This file, which provides project details and instructions.
+- **`LICENSE`**: Contains the open-source license details for the project.
+
+
 
 ## Getting Started
 
@@ -71,3 +102,4 @@ Here are example images after applying the filter:
   <img src="REAME_img/2.png" alt="Filter Example 2">
   <img src="REAME_img/3.png" alt="Filter Example 3">
 </p>
+

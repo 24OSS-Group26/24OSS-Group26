@@ -64,8 +64,10 @@ This repository includes:
 Run the `main.py` script in the `src` folder to select and apply various filters to images. Follow the instructions in the script for filter selection and intensity adjustment.
 
 ## Screenshot Example
-Here is an example image after applying the filter:
+Here are example images after applying the filter:
 
 <p align="center">
-  <img src="README_img/스크린샷%202024-11-10%20223241.png" alt="Filter Example">
+  <img src="REAME_img/1.png" alt="Filter Example 1">
+  <img src="REAME_img/2.png" alt="Filter Example 2">
+  <img src="REAME_img/3.png" alt="Filter Example 3">
 </p>

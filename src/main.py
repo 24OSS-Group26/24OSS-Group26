@@ -34,7 +34,8 @@ class FilterApp:
 
     def init_gui(self):
         # Title
-        title_label = ctk.CTkLabel(self.root, text="Photo Filter Application", font=("Helvetica", 28, "bold"), text_color="#1abc9c")
+        title_label = ctk.CTkLabel(self.root, text="Photo Filter Application", font=("Helvetica", 28, "bold"),
+                                   text_color="#1abc9c")
         title_label.pack(pady=20)
 
         # Top buttons (Open & Save)
@@ -42,11 +43,13 @@ class FilterApp:
         button_frame_top.pack(pady=10, fill=ctk.X)
 
         # Open Image button (left)
-        btn_open = ctk.CTkButton(button_frame_top, text="Open Image", command=self.open_image, width=180, fg_color="#27ae60")
+        btn_open = ctk.CTkButton(button_frame_top, text="Open Image", command=self.open_image, width=180,
+                                 fg_color="#27ae60")
         btn_open.grid(row=0, column=0, padx=15, pady=10, sticky="w")
 
         # Save Image button (right)
-        btn_save = ctk.CTkButton(button_frame_top, text="Save Image", command=self.save_image, width=180, fg_color="#3498db")
+        btn_save = ctk.CTkButton(button_frame_top, text="Save Image", command=self.save_image, width=180,
+                                 fg_color="#3498db")
         btn_save.grid(row=0, column=1, padx=15, pady=10, sticky="e")
 
         # Canvas Frame for displaying the image
@@ -64,7 +67,7 @@ class FilterApp:
         button_frame = ctk.CTkFrame(self.root, fg_color="transparent")
         button_frame.pack(pady=10, padx=20, fill=ctk.BOTH)
 
-        # Add buttons for each filter
+        # Add buttons for each filter (15 filters arranged in 3x5 grid)
         filters = [
             ("Mosaic", self.apply_mosaic_filter),
             ("Grayscale", self.apply_grayscale_filter),
@@ -78,11 +81,16 @@ class FilterApp:
             ("Saturation", self.apply_saturation_filter),
             ("HDR", self.apply_hdr_filter),
             ("Vignette", self.apply_vignette_filter),
+            ("추가1", self.apply_additional_filter1),  # New filter
+            ("추가2", self.apply_additional_filter2),  # New filter
+            ("추가3", self.apply_additional_filter3),  # New filter
         ]
 
-        # Centralized filter buttons using grid
+        # 3x5 Grid Layout
         for i, (text, command) in enumerate(filters):
-            ctk.CTkButton(button_frame, text=f"{text} Filter", command=command, width=150).grid(row=(i // 4) + 1, column=i % 4, padx=15, pady=10, sticky="nsew")
+            ctk.CTkButton(button_frame, text=f"{text} Filter", command=command, width=150).grid(
+                row=i // 5, column=i % 5, padx=15, pady=10, sticky="nsew"
+            )
 
         # Footer help text
         footer_label = ctk.CTkLabel(self.root, text="Tip: Open an image, apply a filter, and save it!",
@@ -102,9 +110,6 @@ class FilterApp:
         except Exception as e:
             messagebox.showerror("Error", f"Failed to open the image: {e}")
             return
-
-        # Store the original file path
-        self.original_filename = file_path
 
         self.cv_image = self.original_image.copy()
         self.current_filter = "None"
@@ -134,16 +139,21 @@ class FilterApp:
     def update_filter_label(self):
         self.filter_label.configure(text=f"Current Filter: {self.current_filter}")
 
-    # Filter methods
+    # Filter methods with cancellation logic
     def apply_filter(self, filter_function, filter_name):
         if self.original_image is None:
             messagebox.showwarning("Warning", "Open an image first!")
             return
-        self.cv_image = filter_function(self.original_image.copy())
-        self.current_filter = filter_name
+        if self.current_filter == filter_name:  # Cancel the filter if already applied
+            self.cv_image = self.original_image.copy()
+            self.current_filter = "None"
+        else:  # Apply the new filter
+            self.cv_image = filter_function(self.original_image.copy())
+            self.current_filter = filter_name
         self.update_filter_label()
         self.display_image()
 
+    # Filter-specific methods
     def apply_mosaic_filter(self):
         self.apply_filter(apply_mosaic_to_faces, "Mosaic")
 
@@ -180,6 +190,16 @@ class FilterApp:
     def apply_vignette_filter(self):
         self.apply_filter(apply_vignette, "Vignette")
 
+    # Placeholder filters for 추가1, 추가2, 추가3
+    def apply_additional_filter1(self):
+        self.apply_filter(lambda img: img, "추가1")
+
+    def apply_additional_filter2(self):
+        self.apply_filter(lambda img: img, "추가2")
+
+    def apply_additional_filter3(self):
+        self.apply_filter(lambda img: img, "추가3")
+
     def save_image(self):
         if self.cv_image is None:
             messagebox.showwarning("Warning", "No image to save!")
@@ -189,11 +209,6 @@ class FilterApp:
             return
 
         # Use the original filename stored after opening the image
-        if self.original_image is None:
-            messagebox.showwarning("Warning", "No image to save!")
-            return
-
-        # Combine the original file name and applied filter
         original_name = self.original_filename.split("/")[-1].split(".")[0]  # Get the name without extension
         new_filename = f"{original_name}_{self.current_filter}.png"
 

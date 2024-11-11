@@ -86,7 +86,7 @@ The directory structure for this repository is as follows:
    ```
 
 ## Features
-- **Mosaic Filter**: Apply a pixelation effect to blur parts or all of an image.
+- **Mosaic Filter**: Detect faces in an image and apply a pixelation (mosaic) effect specifically to those areas. If multiple faces are detected, the filter applies the mosaic effect to all detected faces. This ensures privacy or artistic effects while leaving the rest of the image intact.
 - **Additional Filters**: Explore more effects such as grayscale, sepia, and more.
 
 ## Usage

@@ -48,18 +48,43 @@ The directory structure for this repository is as follows:
 │   ├── create_gif.py             # Python script to create GIFs
 │   └── output.gif                # Generated GIF example
 ├── test_img/                     # Directory containing sample images
-├── requirements.txt              # List of dependencies (Python and OpenCV)
+├── requirements.txt              # List of dependencies (auto-generated)
+├── generate_requirements.py      # Script to generate requirements.txt
 ├── README.md                     # Project documentation
 └── LICENSE                       # License information
 </pre>
 
 - **`src/filters/`**: Contains Python scripts for various image processing filters like blur, brightness adjustment, cartoon effect, etc.
-- **`src/main.py`**: The main script that allows users to apply the filters interactively.
-- **`gif/`**: This folder includes Python scripts (create_gif.py) for creating GIFs and several example screenshots (e.g., screenshot_1.png, screenshot_2.png). It also contains an output example GIF (output.gif), showcasing filter application processes.
-- **`test_img/`**: A directory for storing sample images to demonstrate the effects of the filters.
-- **`requirements.txt`**: A file that lists all required Python libraries for the project.
-- **`README.md`**: Contains project details and instructions for use.
-- **`LICENSE`**: Includes the open-source license details for the project.
+  - **`blur.py`**: Adds a blur effect to the input image.
+  - **`brightness.py`**: Adjusts the brightness of the image.
+  - **`cartoon.py`**: Applies a cartoon-style effect using CartoonGAN.
+  - **`edge_detection.py`**: Detects edges in the image.
+  - **`grayscale.py`**: Converts the image to grayscale.
+  - **`hdr_effect.py`**: Adds a high dynamic range (HDR) effect.
+  - **`invert.py`**: Inverts the colors of the image.
+  - **`mosaic.py`**: Detects faces in the image and applies a mosaic (pixelation) effect to anonymize them.
+  - **`portrait_mode.py`**: Simulates a portrait mode by blurring the background while keeping the person in focus.
+  - **`saturation.py`**: Adjusts the saturation levels of the image.
+  - **`sepia.py`**: Applies a sepia tone effect.
+  - **`sketch.py`**: Converts the image to a pencil sketch effect.
+  - **`vignette.py`**: Adds a vignette (darkened border) effect.
+
+- **`src/main.py`**: The main script that provides a GUI interface for applying the filters interactively. Users can open an image, apply filters, and save the results.
+
+- **`gif/`**: Includes scripts for creating GIFs and example outputs.
+  - **`create_gif.py`**: A Python script to create GIF animations showcasing filter application.
+  - **`output.gif`**: An example of a generated GIF.
+
+- **`test_img/`**: A directory containing sample images to demonstrate the effects of the filters.
+
+- **`generate_requirements.py`**: A script that generates a `requirements.txt` file based on the installed Python packages in the environment.
+
+- **`requirements.txt`**: A file listing all the required dependencies for running the project, including Python libraries like OpenCV, TensorFlow, and CustomTkinter.
+
+- **`README.md`**: The main documentation file that provides an overview of the project, usage instructions, and details about each component.
+
+- **`LICENSE`**: Contains the open-source license information for the project.
+
 
 
 ## Getting Started

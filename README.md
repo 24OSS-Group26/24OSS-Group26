@@ -44,7 +44,6 @@ The directory structure for this repository is as follows:
 │   │   └── vignette.py           # Vignette effect filter
 │   └── main.py                   # Main script for filter selection and application
 ├── test_img/                     # Directory containing sample images
-├── .venv/                        # Virtual environment directory
 ├── requirements.txt              # List of dependencies (Python and OpenCV)
 ├── README.md                     # Project documentation
 └── LICENSE                       # License information

@@ -26,7 +26,7 @@ class FilterApp:
         self.root.rowconfigure(2, weight=1)
         self.root.columnconfigure(0, weight=1)
         ctk.set_appearance_mode("Dark")
-        ctk.set_default_color_theme("blue")  # 기존 'blue' 테마 유지
+        ctk.set_default_color_theme("blue")
 
         self.image = None
         self.cv_image = None
@@ -38,7 +38,7 @@ class FilterApp:
     def init_gui(self):
         # Title
         title_label = ctk.CTkLabel(self.root, text="Photo Filter Application", font=("Arial", 28, "bold"),
-                                   text_color="#1abc9c")  # 제목 색상 유지
+                                   text_color="#1abc9c")
         title_label.grid(row=0, column=0, pady=10, sticky="n")
 
         # Top buttons (Open & Save)
@@ -59,7 +59,7 @@ class FilterApp:
         # Canvas Frame
         self.canvas_frame = ctk.CTkFrame(self.root, fg_color="transparent")
         self.canvas_frame.grid(row=2, column=0, pady=10, padx=20, sticky="nsew")
-        self.canvas = ctk.CTkCanvas(self.canvas_frame, bg="gray", bd=0, highlightthickness=0)  # 캔버스 색상 유지
+        self.canvas = ctk.CTkCanvas(self.canvas_frame, bg="gray", bd=0, highlightthickness=0)
         self.canvas.pack(fill="both", expand=True)
 
         # Bind resize event
@@ -67,7 +67,7 @@ class FilterApp:
 
         # Current Filter Label
         self.filter_label = ctk.CTkLabel(self.root, text=f"Current Filter: {self.current_filter}",
-                                         font=("Arial", 16), text_color="#00d2d3")  # 필터 텍스트 색상 유지
+                                         font=("Arial", 16), text_color="#00d2d3")
         self.filter_label.grid(row=3, column=0, pady=5, sticky="n")
 
         # Filter Buttons
@@ -93,10 +93,13 @@ class FilterApp:
             ("추가3", self.apply_additional_filter3),
         ]
 
+        # Modify padding and button size
+        button_width = 180  # 줄인 버튼 크기
         for i, (text, command) in enumerate(filters):
-            ctk.CTkButton(button_frame, text=f"{text} Filter", command=command).grid(
+            ctk.CTkButton(button_frame, text=f"{text} Filter", command=command, width=button_width).grid(
                 row=i // 5, column=i % 5, padx=10, pady=5, sticky="nsew"
             )
+
 
         footer_label = ctk.CTkLabel(self.root, text="Tip: Open an image, apply a filter, and save it!",
                                     font=("Arial", 14), text_color="#bdc3c7")  # 푸터 텍스트 색상 유지

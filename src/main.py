@@ -228,7 +228,8 @@ class FilterApp:
         if not file_path:
             return
         cv2.imwrite(file_path, self.cv_image)  # 저장
-        messagebox.showinfo("Info", f"Image saved successfully as {file_path}!")
+        messagebox.showinfo("Info", f"Image saved successfully!")
+        #messagebox.showinfo("Info", f"Image saved successfully as {file_path}!")
 
     def on_resize(self, event):
         """Callback for dynamically resizing the canvas when the window size changes."""

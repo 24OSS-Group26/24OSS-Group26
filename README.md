@@ -38,11 +38,15 @@ The directory structure for this repository is as follows:
 │   │   ├── hdr_effect.py         # HDR effect filter
 │   │   ├── invert.py             # Invert colors filter
 │   │   ├── mosaic.py             # Mosaic (pixelation) filter
+│   │   ├── portrait_mode.py      # Portrait Mode filter
 │   │   ├── saturation.py         # Saturation adjustment filter
 │   │   ├── sepia.py              # Sepia tone filter
 │   │   ├── sketch.py             # Sketch effect filter
 │   │   └── vignette.py           # Vignette effect filter
 │   └── main.py                   # Main script for filter selection and application
+├── gif/                          # Contains scripts and screenshots to create GIFs
+│   ├── create_gif.py             # Python script to create GIFs
+│   └── output.gif                # Generated GIF example
 ├── test_img/                     # Directory containing sample images
 ├── requirements.txt              # List of dependencies (Python and OpenCV)
 ├── README.md                     # Project documentation
@@ -50,12 +54,12 @@ The directory structure for this repository is as follows:
 </pre>
 
 - **`src/filters/`**: Contains Python scripts for various image processing filters like blur, brightness adjustment, cartoon effect, etc.
-- **`src/main.py`**: The main script that allows users to apply the filters.
+- **`src/main.py`**: The main script that allows users to apply the filters interactively.
+- **`gif/`**: This folder includes Python scripts (create_gif.py) for creating GIFs and several example screenshots (e.g., screenshot_1.png, screenshot_2.png). It also contains an output example GIF (output.gif), showcasing filter application processes.
 - **`test_img/`**: A directory for storing sample images to demonstrate the effects of the filters.
 - **`requirements.txt`**: A file that lists all required Python libraries for the project.
-- **`README.md`**: This file, which provides project details and instructions.
-- **`LICENSE`**: Contains the open-source license details for the project.
-
+- **`README.md`**: Contains project details and instructions for use.
+- **`LICENSE`**: Includes the open-source license details for the project.
 
 
 ## Getting Started
@@ -96,10 +100,12 @@ Run the `main.py` script in the `src` folder to select and apply various filters
 Here are example images after applying the filter:
 
 <p align="center">
-  <img src="README_img/1.png" alt="Filter Example 1">
-  <img src="README_img/2.png" alt="Filter Example 2">
-  <img src="README_img/3.png" alt="Filter Example 3">
+  <img src="README_img/6.png" alt="Filter Example 1">
+  <img src="README_img/7.png" alt="Filter Example 2">
+  <img src="README_img/8.png" alt="Filter Example 3">
   <img src="README_img/gif/output.gif" alt="Filter Example gif 1">
-  <img src="README_img/5.png" alt="Filter Example 5">
+  <img src="README_img/9.png" alt="Filter Example 5">
+  <img src="README_img/10.png" alt="Filter Example 5">
+  <img src="README_img/11.png" alt="Filter Example 5">
 </p>
 

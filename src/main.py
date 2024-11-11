@@ -102,7 +102,7 @@ class FilterApp:
 
 
         footer_label = ctk.CTkLabel(self.root, text="Tip: Open an image, apply a filter, and save it!",
-                                    font=("Arial", 14), text_color="#bdc3c7")  # 푸터 텍스트 색상 유지
+                                    font=("Arial", 14), text_color="#bdc3c7")
         footer_label.grid(row=5, column=0, pady=10, sticky="n")
 
     def open_image(self):

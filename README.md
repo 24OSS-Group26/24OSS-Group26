@@ -52,7 +52,6 @@ The directory structure for this repository is as follows:
 - **`src/filters/`**: Contains Python scripts for various image processing filters like blur, brightness adjustment, cartoon effect, etc.
 - **`src/main.py`**: The main script that allows users to apply the filters.
 - **`test_img/`**: A directory for storing sample images to demonstrate the effects of the filters.
-- **`.venv/`**: Virtual environment to manage dependencies.
 - **`requirements.txt`**: A file that lists all required Python libraries for the project.
 - **`README.md`**: This file, which provides project details and instructions.
 - **`LICENSE`**: Contains the open-source license details for the project.

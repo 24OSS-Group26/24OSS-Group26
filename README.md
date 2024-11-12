@@ -19,7 +19,7 @@ This repository is dedicated to the Group 26 term project for the **Open Source 
 | Name    | GitHub Profile                                         | Email                                                |
 |---------|--------------------------------------------------------|------------------------------------------------------|
 | 송영빈   | [<img src="https://img.shields.io/badge/GitHub-songyb111--gachon-black?logo=github" alt="songyb111-gachon">](https://github.com/songyb111-gachon) | <img src="https://img.shields.io/badge/songyb111@gachon.ac.kr-blue" alt="songyb111@gachon.ac.kr"> |
-| 박준우   | [<img src="https://img.shields.io/badge/GitHub-cire21st-black?logo=github" alt="cire21st">](https://github.com/cire21st)               | <img src="https://img.shields.io/badge/eric321kr@gmail.com-blue" alt="junu321kr@gmail.com">  |
+| 박준우   | [<img src="https://img.shields.io/badge/GitHub-cire21st-black?logo=github" alt="cire21st">](https://github.com/cire21st)               | <img src="https://img.shields.io/badge/junu321kr@gmail.com-blue" alt="junu321kr@gmail.com">  |
 | 조수연   | [<img src="https://img.shields.io/badge/GitHub-yeun23-black?logo=github" alt="yeun23">](https://github.com/yeun23)                   | <img src="https://img.shields.io/badge/suyeun1634@gachon.ac.kr-blue" alt="suyeun1634@gachon.ac.kr"> | 
 
 

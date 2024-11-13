@@ -37,32 +37,16 @@ class FilterApp:
         self.filters_applied = []  # 각 이미지에 적용된 필터 이름 리스트
         self.init_gui()
 
-    def show_previous_image(self):
-        if not self.cv_images:
-            messagebox.showwarning("Warning", "No images loaded!")
-            return
-        self.current_index = (self.current_index - 1) % len(self.cv_images)
-        self.update_filter_label()
-        self.display_image()
-
-    def show_next_image(self):
-        if not self.cv_images:
-            messagebox.showwarning("Warning", "No images loaded!")
-            return
-        self.current_index = (self.current_index + 1) % len(self.cv_images)
-        self.update_filter_label()
-        self.display_image()
-
     def init_gui(self):
         # Title
         title_label = ctk.CTkLabel(self.root, text="Photo Filter Application", font=("Arial", 28, "bold"),
                                    text_color="#1abc9c")
         title_label.grid(row=0, column=0, pady=10, sticky="n")
 
-        # Top buttons (Open, Save, Next, Previous)
+        # Top buttons (Open, Save)
         button_frame_top = ctk.CTkFrame(self.root, fg_color="transparent")
         button_frame_top.grid(row=1, column=0, pady=5, sticky="ew")
-        button_frame_top.columnconfigure((0, 1, 2, 3, 4), weight=1)
+        button_frame_top.columnconfigure((0, 1), weight=1)
 
         btn_open = ctk.CTkButton(button_frame_top, text="Open Images", command=self.open_images, width=180,
                                  fg_color="#27ae60")
@@ -70,13 +54,7 @@ class FilterApp:
 
         btn_save = ctk.CTkButton(button_frame_top, text="Save All", command=self.save_all_images, width=180,
                                  fg_color="#3498db")
-        btn_save.grid(row=0, column=4, padx=15, pady=10, sticky="e")
-
-        btn_prev = ctk.CTkButton(button_frame_top, text="Previous", command=self.show_previous_image, width=180)
-        btn_prev.grid(row=0, column=1, padx=10, pady=10)
-
-        btn_next = ctk.CTkButton(button_frame_top, text="Next", command=self.show_next_image, width=180)
-        btn_next.grid(row=0, column=3, padx=10, pady=10)
+        btn_save.grid(row=0, column=1, padx=15, pady=10, sticky="e")
 
         # Canvas Frame
         self.canvas_frame = ctk.CTkFrame(self.root, fg_color="transparent")
@@ -84,7 +62,17 @@ class FilterApp:
         self.canvas = ctk.CTkCanvas(self.canvas_frame, bg="gray", bd=0, highlightthickness=0)
         self.canvas.pack(fill="both", expand=True)
 
-        self.canvas_frame.bind("<Configure>", self.on_resize)
+        # Canvas Navigation Buttons
+        self.left_button = ctk.CTkButton(self.canvas, text="<", width=40, command=self.show_previous_image)
+        self.right_button = ctk.CTkButton(self.canvas, text=">", width=40, command=self.show_next_image)
+
+        # Initially hide buttons
+        self.left_button.place_forget()
+        self.right_button.place_forget()
+
+        # Canvas hover events
+        self.canvas.bind("<Enter>", self.show_navigation_buttons)
+        self.canvas.bind("<Leave>", self.hide_navigation_buttons)
 
         # Current Filter Label
         self.filter_label = ctk.CTkLabel(self.root, text=f"Current Filter: None",
@@ -161,12 +149,11 @@ class FilterApp:
         self.display_image()
 
     def save_all_images(self):
-        """로드된 모든 이미지를 현재 필터와 함께 저장."""
         if not self.cv_images:
             messagebox.showwarning("Warning", "No images to save!")
             return
 
-        folder_path = filedialog.askdirectory()  # 사용자에게 저장 폴더 선택 요청
+        folder_path = filedialog.askdirectory()
         if not folder_path:
             return
 
@@ -204,6 +191,34 @@ class FilterApp:
         self.image = ImageTk.PhotoImage(image)
         self.canvas.delete("all")
         self.canvas.create_image(canvas_width // 2, canvas_height // 2, image=self.image)
+
+    def show_previous_image(self):
+        if not self.cv_images:
+            messagebox.showwarning("Warning", "No images loaded!")
+            return
+        self.current_index = (self.current_index - 1) % len(self.cv_images)
+        self.update_filter_label()
+        self.display_image()
+
+    def show_next_image(self):
+        if not self.cv_images:
+            messagebox.showwarning("Warning", "No images loaded!")
+            return
+        self.current_index = (self.current_index + 1) % len(self.cv_images)
+        self.update_filter_label()
+        self.display_image()
+
+    def show_navigation_buttons(self, event):
+        """마우스가 캔버스에 들어가면 버튼 표시."""
+        canvas_width = self.canvas.winfo_width()
+        canvas_height = self.canvas.winfo_height()
+        self.left_button.place(x=10, y=canvas_height // 2, anchor="w")
+        self.right_button.place(x=canvas_width - 10, y=canvas_height // 2, anchor="e")
+
+    def hide_navigation_buttons(self, event):
+        """마우스가 캔버스를 벗어나면 버튼 숨기기."""
+        self.left_button.place_forget()
+        self.right_button.place_forget()
 
     def apply_mosaic_filter(self):
         self.apply_filter(apply_mosaic_to_faces, "Mosaic")
@@ -249,9 +264,6 @@ class FilterApp:
 
     def apply_additional_filter3(self):
         self.apply_filter(lambda img: img, "추가3")
-
-    def on_resize(self, event):
-        self.display_image()
 
 
 if __name__ == "__main__":

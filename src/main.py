@@ -18,6 +18,7 @@ from PIL import Image, ImageTk
 import numpy as np
 import os
 
+
 class FilterApp:
     def __init__(self, root):
         self.root = root
@@ -33,8 +34,7 @@ class FilterApp:
         self.original_images = []  # 원본 이미지 저장
         self.original_file_paths = []  # 파일 경로 저장
         self.current_index = 0  # 현재 표시 중인 이미지 인덱스
-        self.current_filter = "None"
-
+        self.filters_applied = []  # 각 이미지에 적용된 필터 이름 리스트
         self.init_gui()
 
     def show_previous_image(self):
@@ -42,7 +42,7 @@ class FilterApp:
             messagebox.showwarning("Warning", "No images loaded!")
             return
         self.current_index = (self.current_index - 1) % len(self.cv_images)
-        self.current_filter = "None"  # 새 이미지로 전환 시 필터 초기화
+        self.update_filter_label()
         self.display_image()
 
     def show_next_image(self):
@@ -50,7 +50,7 @@ class FilterApp:
             messagebox.showwarning("Warning", "No images loaded!")
             return
         self.current_index = (self.current_index + 1) % len(self.cv_images)
-        self.current_filter = "None"  # 새 이미지로 전환 시 필터 초기화
+        self.update_filter_label()
         self.display_image()
 
     def init_gui(self):
@@ -87,7 +87,7 @@ class FilterApp:
         self.canvas_frame.bind("<Configure>", self.on_resize)
 
         # Current Filter Label
-        self.filter_label = ctk.CTkLabel(self.root, text=f"Current Filter: {self.current_filter}",
+        self.filter_label = ctk.CTkLabel(self.root, text=f"Current Filter: None",
                                          font=("Arial", 16), text_color="#00d2d3")
         self.filter_label.grid(row=3, column=0, pady=5, sticky="n")
 
@@ -129,10 +129,10 @@ class FilterApp:
         if not file_paths:
             return
 
-        self.images.clear()
         self.cv_images.clear()
         self.original_images.clear()
         self.original_file_paths.clear()
+        self.filters_applied.clear()  # 필터 상태 초기화
 
         for file_path in file_paths:
             try:
@@ -143,24 +143,44 @@ class FilterApp:
                 self.original_images.append(image)
                 self.cv_images.append(image.copy())
                 self.original_file_paths.append(file_path)
+                self.filters_applied.append("None")  # 새 이미지의 초기 필터 상태 설정
             except Exception as e:
                 messagebox.showerror("Error", f"Failed to open {file_path}: {e}")
 
         self.current_index = 0
+        self.update_filter_label()
         self.display_image()
 
     def apply_filter(self, filter_function, filter_name):
         if not self.cv_images:
             messagebox.showwarning("Warning", "No images loaded!")
             return
-        if self.current_filter == filter_name:
-            self.cv_images[self.current_index] = self.original_images[self.current_index].copy()
-            self.current_filter = "None"
-        else:
-            self.cv_images[self.current_index] = filter_function(self.original_images[self.current_index].copy())
-            self.current_filter = filter_name
+        self.cv_images[self.current_index] = filter_function(self.original_images[self.current_index].copy())
+        self.filters_applied[self.current_index] = filter_name  # 현재 이미지의 필터 업데이트
         self.update_filter_label()
         self.display_image()
+
+    def save_all_images(self):
+        """로드된 모든 이미지를 현재 필터와 함께 저장."""
+        if not self.cv_images:
+            messagebox.showwarning("Warning", "No images to save!")
+            return
+
+        folder_path = filedialog.askdirectory()  # 사용자에게 저장 폴더 선택 요청
+        if not folder_path:
+            return
+
+        for idx, image in enumerate(self.cv_images):
+            original_name = os.path.splitext(os.path.basename(self.original_file_paths[idx]))[0]
+            filter_name = self.filters_applied[idx] if self.filters_applied[idx] != "None" else "original"
+            save_path = os.path.join(folder_path, f"{original_name}_{filter_name}.png")
+            cv2.imwrite(save_path, image)
+
+        messagebox.showinfo("Info", "All images saved successfully!")
+
+    def update_filter_label(self):
+        current_filter = self.filters_applied[self.current_index]
+        self.filter_label.configure(text=f"Current Filter: {current_filter}")
 
     def display_image(self):
         if not self.cv_images:
@@ -184,37 +204,6 @@ class FilterApp:
         self.image = ImageTk.PhotoImage(image)
         self.canvas.delete("all")
         self.canvas.create_image(canvas_width // 2, canvas_height // 2, image=self.image)
-
-    def save_all_images(self):
-        if not self.cv_images:
-            messagebox.showwarning("Warning", "No images to save!")
-            return
-
-        folder_path = filedialog.askdirectory()
-        if not folder_path:
-            return
-
-        for idx, image in enumerate(self.cv_images):
-            original_name = os.path.splitext(os.path.basename(self.original_file_paths[idx]))[0]
-            filter_name = self.current_filter if self.current_filter != "None" else "original"
-            save_path = os.path.join(folder_path, f"{original_name}_{filter_name}.png")
-            cv2.imwrite(save_path, image)
-
-        messagebox.showinfo("Info", "All images saved successfully!")
-
-
-    def apply_filter(self, filter_function, filter_name):
-        if not self.cv_images:
-            messagebox.showwarning("Warning", "No images loaded!")
-            return
-        if self.current_filter == filter_name:
-            self.cv_images[self.current_index] = self.original_images[self.current_index].copy()
-            self.current_filter = "None"
-        else:
-            self.cv_images[self.current_index] = filter_function(self.original_images[self.current_index].copy())
-            self.current_filter = filter_name
-        self.update_filter_label()
-        self.display_image()
 
     def apply_mosaic_filter(self):
         self.apply_filter(apply_mosaic_to_faces, "Mosaic")
@@ -260,9 +249,6 @@ class FilterApp:
 
     def apply_additional_filter3(self):
         self.apply_filter(lambda img: img, "추가3")
-
-    def update_filter_label(self):
-        self.filter_label.configure(text=f"Current Filter: {self.current_filter}")
 
     def on_resize(self, event):
         self.display_image()

@@ -14,6 +14,7 @@ from filters.saturation import apply_saturation
 from filters.hdr_effect import apply_hdr_effect
 from filters.vignette import apply_vignette
 from filters.portrait_mode import apply_portrait_mode
+from filters.remove_person import apply_remove_person  # 새로 만든 필터
 from PIL import Image, ImageTk
 import numpy as np
 import os
@@ -98,7 +99,7 @@ class FilterApp:
             ("HDR", self.apply_hdr_filter),
             ("Vignette", self.apply_vignette_filter),
             ("Portrait Mode", self.apply_portrait_mode),
-            ("추가2", self.apply_additional_filter2),
+            ("Remove Person", self.apply_remove_person_filter),  # 교체된 추가2
             ("추가3", self.apply_additional_filter3),
         ]
 
@@ -120,7 +121,7 @@ class FilterApp:
         self.cv_images.clear()
         self.original_images.clear()
         self.original_file_paths.clear()
-        self.filters_applied.clear()  # 필터 상태 초기화
+        self.filters_applied.clear()
 
         for file_path in file_paths:
             try:
@@ -131,7 +132,7 @@ class FilterApp:
                 self.original_images.append(image)
                 self.cv_images.append(image.copy())
                 self.original_file_paths.append(file_path)
-                self.filters_applied.append("None")  # 새 이미지의 초기 필터 상태 설정
+                self.filters_applied.append("None")
             except Exception as e:
                 messagebox.showerror("Error", f"Failed to open {file_path}: {e}")
 
@@ -144,7 +145,7 @@ class FilterApp:
             messagebox.showwarning("Warning", "No images loaded!")
             return
         self.cv_images[self.current_index] = filter_function(self.original_images[self.current_index].copy())
-        self.filters_applied[self.current_index] = filter_name  # 현재 이미지의 필터 업데이트
+        self.filters_applied[self.current_index] = filter_name
         self.update_filter_label()
         self.display_image()
 
@@ -209,14 +210,12 @@ class FilterApp:
         self.display_image()
 
     def show_navigation_buttons(self, event):
-        """마우스가 캔버스에 들어가면 버튼 표시."""
         canvas_width = self.canvas.winfo_width()
         canvas_height = self.canvas.winfo_height()
         self.left_button.place(x=10, y=canvas_height // 2, anchor="w")
         self.right_button.place(x=canvas_width - 10, y=canvas_height // 2, anchor="e")
 
     def hide_navigation_buttons(self, event):
-        """마우스가 캔버스를 벗어나면 버튼 숨기기."""
         self.left_button.place_forget()
         self.right_button.place_forget()
 
@@ -259,8 +258,8 @@ class FilterApp:
     def apply_portrait_mode(self):
         self.apply_filter(apply_portrait_mode, "Portrait Mode")
 
-    def apply_additional_filter2(self):
-        self.apply_filter(lambda img: img, "추가2")
+    def apply_remove_person_filter(self):
+        self.apply_filter(apply_remove_person, "Remove Person")
 
     def apply_additional_filter3(self):
         self.apply_filter(lambda img: img, "추가3")

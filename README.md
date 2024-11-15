@@ -9,8 +9,8 @@
   <img src="https://img.shields.io/badge/IDE-PyCharm-brightgreen?logo=pycharm&logoColor=white" alt="PyCharm">
 </p>
 
-<p align="center" style="font-size: 12px; color: gray;">
-  <b>Note:</b> It is optional but highly recommended to use <b>PyCharm</b> as the development environment for this project. PyCharm provides excellent tools for managing virtual environments, debugging, and organizing code efficiently.
+<p>
+  <i>Note: It is optional but highly recommended to use <b>PyCharm</b> as the development environment for this project. PyCharm provides excellent tools for managing virtual environments, debugging, and organizing code efficiently.</i>
 </p>
 
 # 24OSS-Group26  
@@ -18,7 +18,6 @@
 
 ## Project Overview
 This repository is dedicated to the Group 26 term project for the **Open Source Software Course, 2024**, at **Gachon University**. Our project involves applying various filters, such as mosaic effects, to photos using OpenCV. Through this project, we aim to explore image processing techniques in an open-source context.
-
 
 
 ## Team Members

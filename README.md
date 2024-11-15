@@ -9,9 +9,7 @@
   <img src="https://img.shields.io/badge/IDE-PyCharm-brightgreen?logo=pycharm&logoColor=white" alt="PyCharm">
 </p>
 
-<p align="center">
   <b>Note:</b> It is optional but highly recommended to use <b>PyCharm</b> as the development environment for this project. PyCharm provides excellent tools for managing virtual environments, debugging, and organizing code efficiently.
-</p>
 
 # 24OSS-Group26  
 **Applying Filters such as Mosaic to Photos with OpenCV**

@@ -93,6 +93,14 @@ The directory structure for this repository is as follows:
 
 ## Getting Started
 
+0. **Use PyCharm and Set Up a New Virtual Environment (Recommended)**  
+   - It is recommended to use **PyCharm** for better project management and debugging experience. Within PyCharm, create a **new virtual environment** to ensure that all dependencies are isolated for this project.  
+   - To set up a new virtual environment in PyCharm:  
+     1. Go to **File > Settings > Project: <Project Name> > Python Interpreter**.  
+     2. Click the **gear icon** and select **Add...**.  
+     3. Choose **New Virtual Environment** and specify the location.  
+     4. Click **OK** to create the environment.
+
 1. **Clone the Repository**  
    Clone this repository to your local machine:
    ```bash

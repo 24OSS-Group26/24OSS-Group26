@@ -100,6 +100,7 @@ The directory structure for this repository is as follows:
      2. Click the **gear icon** and select **Add...**.  
      3. Choose **New Virtual Environment** and specify the location.  
      4. Click **OK** to create the environment.
+- **Note:** The instructions below are based on this setup and assume you are working in a new virtual environment within PyCharm.
 
 1. **Clone the Repository**  
    Clone this repository to your local machine:

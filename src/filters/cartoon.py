@@ -4,7 +4,6 @@ import numpy as np
 import tensorflow as tf
 import requests
 
-
 MODEL_URL = "https://tfhub.dev/sayakpaul/lite-model/cartoongan/dr/1?lite-format=tflite"
 MODEL_PATH = "cartoongan.tflite"
 
@@ -34,7 +33,6 @@ def load_tflite_model(model_path):
     return interpreter
 
 def apply_cartoon_filter(image):
-    
     # 모델 다운로드
     download_model(MODEL_URL, MODEL_PATH)
 
@@ -74,9 +72,14 @@ if __name__ == "__main__":
     image_path = "input.jpg"  # 입력 이미지 경로
     image = cv2.imread(image_path)
 
-    # 카툰 필터 적용
-    cartoon_image = apply_cartoon_filter(image)
+    if image is None:
+        print("Error: The image file could not be loaded. Please check the file path.")
+    else:
+        # 카툰 필터 적용
+        cartoon_image = apply_cartoon_filter(image)
 
-    # 결과 저장
-    cv2.imwrite("cartoon_output.jpg", cartoon_image)
-    print("Cartoon filter applied and saved as 'cartoon_output.jpg'.")
+        # 결과 저장
+        output_path = "cartoon_output.jpg"
+        cv2.imwrite(output_path, cartoon_image)
+        print(f"Cartoon filter applied and saved as '{output_path}'.")
+

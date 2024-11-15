@@ -15,10 +15,11 @@ from filters.hdr_effect import apply_hdr_effect
 from filters.vignette import apply_vignette
 from filters.portrait_mode import apply_portrait_mode
 from filters.remove_person import apply_remove_person  # 새로 만든 필터
+from blackFace import apply_black_face # blackFace 필터
 from PIL import Image, ImageTk
 import numpy as np
 import os
-
+from blackFace import apply_black_face
 
 class FilterApp:
     def __init__(self, root):
@@ -100,7 +101,7 @@ class FilterApp:
             ("Vignette", self.apply_vignette_filter),
             ("Portrait Mode", self.apply_portrait_mode),
             ("Remove Person", self.apply_remove_person_filter),  # 교체된 추가2
-            ("추가3", self.apply_additional_filter3),
+            ("Black Face", self.apply_additional_filter3),
         ]
 
         button_width = 180
@@ -262,7 +263,8 @@ class FilterApp:
         self.apply_filter(apply_remove_person, "Remove Person")
 
     def apply_additional_filter3(self):
-        self.apply_filter(lambda img: img, "추가3")
+        self.apply_filter(apply_black_face, "BlackFace")
+
 
 
 if __name__ == "__main__":

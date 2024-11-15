@@ -1,3 +1,4 @@
+import platform
 import ctypes
 import customtkinter as ctk
 from tkinter import filedialog, messagebox
@@ -20,6 +21,13 @@ from filters.sticker import apply_sticker
 from PIL import Image, ImageTk
 import numpy as np
 import os
+
+# 플랫폼별 DPI 인식 설정
+if platform.system() == "Windows":
+    try:
+        ctypes.windll.shcore.SetProcessDpiAwareness(1)  # Windows DPI 인식 활성화
+    except Exception as e:
+        print(f"DPI Awareness 설정 실패: {e}")
 
 
 class FilterApp:
@@ -219,8 +227,10 @@ class FilterApp:
 
     def show_navigation_buttons(self, event):
         hwnd = self.canvas.winfo_id()
-        dpi = ctypes.windll.user32.GetDpiForWindow(hwnd)
-        scale_factor = dpi / 96  # 기본 DPI가 96
+        dpi = 96  # 기본 DPI 값
+        if platform.system() == "Windows":
+            dpi = ctypes.windll.user32.GetDpiForWindow(hwnd)
+        scale_factor = dpi / 96
         canvas_width = self.canvas.winfo_width()
         canvas_height = self.canvas.winfo_height()
         self.left_button.place(x=int(10 * scale_factor), y=int(canvas_height // 2 * scale_factor), anchor="w")
@@ -277,7 +287,6 @@ class FilterApp:
 
 
 if __name__ == "__main__":
-    ctypes.windll.shcore.SetProcessDpiAwareness(1)  # DPI 인식 활성화
     root = ctk.CTk()
     app = FilterApp(root)
     root.mainloop()

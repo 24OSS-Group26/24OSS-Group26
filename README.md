@@ -1,5 +1,5 @@
 <p align="center">
-  <h1>Applying Filters such as Mosaic to Photos with OpenCV</h1>
+  <h1>Photo Filter Application with OpenCV (Mosaic & More)</h1>
 </p>
 
 <p align="center">

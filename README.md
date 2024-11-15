@@ -14,7 +14,7 @@
 </p>
 
 # 24OSS-Group26  
-**Applying Filters such as Mosaic to Photos with OpenCV**
+**Photo Filter Application with OpenCV (Mosaic & More)**
 
 ## Project Overview
 This repository is dedicated to the Group 26 term project for the **Open Source Software Course, 2024**, at **Gachon University**. Our project involves applying various filters, such as mosaic effects, to photos using OpenCV. Through this project, we aim to explore image processing techniques in an open-source context.

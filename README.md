@@ -42,6 +42,7 @@ The directory structure for this repository is as follows:
 │   │   ├── saturation.py         # Saturation adjustment filter
 │   │   ├── sepia.py              # Sepia tone filter
 │   │   ├── sketch.py             # Sketch effect filter
+│   │   ├── sticker.py            # Sticker filter for adding stickers to faces
 │   │   └── vignette.py           # Vignette effect filter
 │   └── main.py                   # Main script for filter selection and application
 ├── gif/                          # Contains scripts and screenshots to create GIFs
@@ -67,6 +68,7 @@ The directory structure for this repository is as follows:
   - **`saturation.py`**: Adjusts the saturation levels of the image.
   - **`sepia.py`**: Applies a sepia tone effect.
   - **`sketch.py`**: Converts the image to a pencil sketch effect.
+  - **`sticker.py`**: Detects faces and places a sticker on top of each detected face.
   - **`vignette.py`**: Adds a vignette (darkened border) effect.
 
 - **`src/main.py`**: The main script that provides a GUI interface for applying the filters interactively. Users can open an image, apply filters, and save the results.

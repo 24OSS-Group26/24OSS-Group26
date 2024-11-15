@@ -32,17 +32,18 @@ The directory structure for this repository is as follows:
 │   ├── filters/                  # Contains Python scripts for each filter
 │   │   ├── blur.py               # Blur filter
 │   │   ├── brightness.py         # Brightness adjustment filter
-│   │   ├── cartoon.py            # Cartoon filter
+│   │   ├── cartoon.py            # Cartoon effect filter
 │   │   ├── edge_detection.py     # Edge detection filter
 │   │   ├── grayscale.py          # Grayscale filter
 │   │   ├── hdr_effect.py         # HDR effect filter
 │   │   ├── invert.py             # Invert colors filter
-│   │   ├── mosaic.py             # Mosaic (pixelation) filter
-│   │   ├── portrait_mode.py      # Portrait Mode filter
+│   │   ├── mosaic.py             # Mosaic (pixelation) filter for face anonymization
+│   │   ├── portrait_mode.py      # Portrait Mode filter with background blur
+│   │   ├── remove_person.py      # Person removal filter
 │   │   ├── saturation.py         # Saturation adjustment filter
 │   │   ├── sepia.py              # Sepia tone filter
-│   │   ├── sketch.py             # Sketch effect filter
-│   │   ├── sticker.py            # Sticker filter for adding stickers to faces
+│   │   ├── sketch.py             # Pencil sketch effect filter
+│   │   ├── sticker.py            # Sticker filter to add stickers to faces
 │   │   └── vignette.py           # Vignette effect filter
 │   └── main.py                   # Main script for filter selection and application
 ├── gif/                          # Contains scripts and screenshots to create GIFs
@@ -56,20 +57,21 @@ The directory structure for this repository is as follows:
 </pre>
 
 - **`src/filters/`**: Contains Python scripts for various image processing filters like blur, brightness adjustment, cartoon effect, etc.
-  - **`blur.py`**: Adds a blur effect to the input image.
+  - **`blur.py`**: Applies a blur effect to the image.
   - **`brightness.py`**: Adjusts the brightness of the image.
-  - **`cartoon.py`**: Applies a cartoon-style effect using CartoonGAN.
+  - **`cartoon.py`**: Converts the image to a cartoon-style effect.
   - **`edge_detection.py`**: Detects edges in the image.
   - **`grayscale.py`**: Converts the image to grayscale.
   - **`hdr_effect.py`**: Adds a high dynamic range (HDR) effect.
   - **`invert.py`**: Inverts the colors of the image.
-  - **`mosaic.py`**: Detects faces in the image and applies a mosaic (pixelation) effect to anonymize them.
-  - **`portrait_mode.py`**: Simulates a portrait mode by blurring the background while keeping the person in focus.
+  - **`mosaic.py`**: Detects faces and applies a mosaic (pixelation) effect for anonymization.
+  - **`portrait_mode.py`**: Simulates portrait mode by blurring the background while keeping the person in focus.
+  - **`remove_person.py`**: Removes a detected person from the image and fills the background.
   - **`saturation.py`**: Adjusts the saturation levels of the image.
   - **`sepia.py`**: Applies a sepia tone effect.
   - **`sketch.py`**: Converts the image to a pencil sketch effect.
-  - **`sticker.py`**: Detects faces and places a sticker on top of each detected face.
-  - **`vignette.py`**: Adds a vignette (darkened border) effect.
+  - **`sticker.py`**: Detects faces and places a sticker on each detected face.
+  - **`vignette.py`**: Adds a vignette effect (darkened edges around the image).
 
 - **`src/main.py`**: The main script that provides a GUI interface for applying the filters interactively. Users can open an image, apply filters, and save the results.
 

@@ -14,7 +14,8 @@ from filters.saturation import apply_saturation
 from filters.hdr_effect import apply_hdr_effect
 from filters.vignette import apply_vignette
 from filters.portrait_mode import apply_portrait_mode
-from filters.remove_person import apply_remove_person  # 새로 만든 필터
+from filters.remove_person import apply_remove_person
+from filters.sticker import apply_sticker
 from PIL import Image, ImageTk
 import numpy as np
 import os
@@ -99,8 +100,8 @@ class FilterApp:
             ("HDR", self.apply_hdr_filter),
             ("Vignette", self.apply_vignette_filter),
             ("Portrait Mode", self.apply_portrait_mode),
-            ("Remove Person", self.apply_remove_person_filter),  # 교체된 추가2
-            ("추가3", self.apply_additional_filter3),
+            ("Remove Person", self.apply_remove_person_filter),
+            ("Sticker", self.apply_sticker_filter),
         ]
 
         button_width = 180
@@ -144,8 +145,16 @@ class FilterApp:
         if not self.cv_images:
             messagebox.showwarning("Warning", "No images loaded!")
             return
-        self.cv_images[self.current_index] = filter_function(self.original_images[self.current_index].copy())
-        self.filters_applied[self.current_index] = filter_name
+
+        # 현재 필터가 이미 적용되어 있다면, 원본으로 복원
+        if self.filters_applied[self.current_index] == filter_name:
+            self.cv_images[self.current_index] = self.original_images[self.current_index].copy()
+            self.filters_applied[self.current_index] = "None"
+        else:
+            # 새로운 필터 적용
+            self.cv_images[self.current_index] = filter_function(self.original_images[self.current_index].copy())
+            self.filters_applied[self.current_index] = filter_name
+
         self.update_filter_label()
         self.display_image()
 
@@ -261,8 +270,8 @@ class FilterApp:
     def apply_remove_person_filter(self):
         self.apply_filter(apply_remove_person, "Remove Person")
 
-    def apply_additional_filter3(self):
-        self.apply_filter(lambda img: img, "추가3")
+    def apply_sticker_filter(self):
+        self.apply_filter(apply_sticker, "Sticker")
 
 
 if __name__ == "__main__":

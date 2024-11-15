@@ -15,11 +15,12 @@ from filters.hdr_effect import apply_hdr_effect
 from filters.vignette import apply_vignette
 from filters.portrait_mode import apply_portrait_mode
 from filters.remove_person import apply_remove_person  # 새로 만든 필터
-from blackFace import apply_black_face # blackFace 필터
+from filters.blackFace import apply_black_face  # blackFace 필터
 from PIL import Image, ImageTk
 import numpy as np
+import sys
 import os
-from blackFace import apply_black_face
+sys.path.append(os.path.join(os.path.dirname(__file__), 'filters'))
 
 class FilterApp:
     def __init__(self, root):

@@ -1,3 +1,4 @@
+import ctypes
 import customtkinter as ctk
 from tkinter import filedialog, messagebox
 import cv2
@@ -146,12 +147,10 @@ class FilterApp:
             messagebox.showwarning("Warning", "No images loaded!")
             return
 
-        # 현재 필터가 이미 적용되어 있다면, 원본으로 복원
         if self.filters_applied[self.current_index] == filter_name:
             self.cv_images[self.current_index] = self.original_images[self.current_index].copy()
             self.filters_applied[self.current_index] = "None"
         else:
-            # 새로운 필터 적용
             self.cv_images[self.current_index] = filter_function(self.original_images[self.current_index].copy())
             self.filters_applied[self.current_index] = filter_name
 
@@ -219,10 +218,13 @@ class FilterApp:
         self.display_image()
 
     def show_navigation_buttons(self, event):
+        hwnd = self.canvas.winfo_id()
+        dpi = ctypes.windll.user32.GetDpiForWindow(hwnd)
+        scale_factor = dpi / 96  # 기본 DPI가 96
         canvas_width = self.canvas.winfo_width()
         canvas_height = self.canvas.winfo_height()
-        self.left_button.place(x=10, y=canvas_height // 2, anchor="w")
-        self.right_button.place(x=canvas_width - 10, y=canvas_height // 2, anchor="e")
+        self.left_button.place(x=int(10 * scale_factor), y=int(canvas_height // 2 * scale_factor), anchor="w")
+        self.right_button.place(x=int(canvas_width - 10 * scale_factor), y=int(canvas_height // 2 * scale_factor), anchor="e")
 
     def hide_navigation_buttons(self, event):
         self.left_button.place_forget()
@@ -275,6 +277,7 @@ class FilterApp:
 
 
 if __name__ == "__main__":
+    ctypes.windll.shcore.SetProcessDpiAwareness(1)  # DPI 인식 활성화
     root = ctk.CTk()
     app = FilterApp(root)
     root.mainloop()

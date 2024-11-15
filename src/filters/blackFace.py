@@ -1,13 +1,21 @@
 import cv2
+import numpy as np
 
-def apply_black_face(image_path, output_path):
+def apply_black_face(image):
+    """
+    입력 이미지를 받아 얼굴을 검게 칠한 후 처리된 이미지를 반환합니다.
+
+    :param image: 처리할 OpenCV 이미지 객체 (numpy.ndarray)
+    :return: 얼굴이 검게 칠해진 OpenCV 이미지 객체
+    """
     # OpenCV의 기본 얼굴 검출기 로드 (Haar Cascade)
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
-    # 이미지 읽기
-    image = cv2.imread(image_path)
-    if image is None:
-        raise ValueError("이미지를 읽을 수 없습니다. 경로를 확인하세요.")
+    # 이미지가 유효한지 확인
+    if image is None or not isinstance(image, np.ndarray):
+        raise ValueError("유효하지 않은 이미지입니다.")
+
+    # 이미지를 그레이스케일로 변환
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # 얼굴 검출
@@ -17,6 +25,4 @@ def apply_black_face(image_path, output_path):
     for (x, y, w, h) in faces:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 0), -1)
 
-    # 결과 저장
-    cv2.imwrite(output_path, image)
-    print(f"결과 이미지가 {output_path}에 저장되었습니다.")
+    return image

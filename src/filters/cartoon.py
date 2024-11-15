@@ -4,10 +4,12 @@ import numpy as np
 import tensorflow as tf
 import requests
 
+# 모델 URL과 로컬 저장 경로
 MODEL_URL = "https://tfhub.dev/sayakpaul/lite-model/cartoongan/dr/1?lite-format=tflite"
 MODEL_PATH = "cartoongan.tflite"
 
 def download_model(url, save_path):
+  
     if not os.path.exists(save_path):
         print("Downloading CartoonGAN model...")
         try:
@@ -26,6 +28,7 @@ def download_model(url, save_path):
         print("Model already exists. Skipping download.")
 
 def load_tflite_model(model_path):
+ 
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model file not found: {model_path}")
     interpreter = tf.lite.Interpreter(model_path=model_path)
@@ -33,6 +36,7 @@ def load_tflite_model(model_path):
     return interpreter
 
 def apply_cartoon_filter(image):
+   
     # 모델 다운로드
     download_model(MODEL_URL, MODEL_PATH)
 
@@ -65,21 +69,4 @@ def apply_cartoon_filter(image):
     cartoon_image = cv2.cvtColor(cartoon_image, cv2.COLOR_RGB2BGR)
 
     return cartoon_image
-
-# 테스트 코드
-if __name__ == "__main__":
-    # 이미지 로드
-    image_path = "input.jpg"  # 입력 이미지 경로
-    image = cv2.imread(image_path)
-
-    if image is None:
-        print("Error: The image file could not be loaded. Please check the file path.")
-    else:
-        # 카툰 필터 적용
-        cartoon_image = apply_cartoon_filter(image)
-
-        # 결과 저장
-        output_path = "cartoon_output.jpg"
-        cv2.imwrite(output_path, cartoon_image)
-        print(f"Cartoon filter applied and saved as '{output_path}'.")
 

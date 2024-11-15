@@ -124,7 +124,15 @@ class FilterApp:
         footer_label.grid(row=5, column=0, pady=10, sticky="n")
 
     def open_images(self):
-        file_paths = filedialog.askopenfilenames(filetypes=[("Image files", "*.jpg;*.png;*.jpeg")])
+        # 현재 스크립트의 디렉토리 기준으로 기본 폴더 경로 설정
+        script_dir = os.path.dirname(os.path.abspath(__file__))  # 현재 파일의 절대 경로
+        default_folder = os.path.join(script_dir, "../test_img")  # 상대 경로를 기준으로 기본 폴더 설정
+
+        # 파일 대화 상자 열기
+        file_paths = filedialog.askopenfilenames(
+            initialdir=default_folder,  # 기본 폴더 설정
+            filetypes=[("Image files", "*.jpg;*.png;*.jpeg")]
+        )
         if not file_paths:
             return
 
@@ -231,10 +239,38 @@ class FilterApp:
         if platform.system() == "Windows":
             dpi = ctypes.windll.user32.GetDpiForWindow(hwnd)
         scale_factor = dpi / 96
-        canvas_width = self.canvas.winfo_width()
-        canvas_height = self.canvas.winfo_height()
-        self.left_button.place(x=int(10 * scale_factor), y=int(canvas_height // 2 * scale_factor), anchor="w")
-        self.right_button.place(x=int(canvas_width - 10 * scale_factor), y=int(canvas_height // 2 * scale_factor), anchor="e")
+
+        # 캔버스 크기 계산 (배율 적용)
+        canvas_width = int(self.canvas.winfo_width() / scale_factor)
+        canvas_height = int(self.canvas.winfo_height() / scale_factor)
+
+        # 버튼 높이를 계산하기 전에 렌더링
+        self.left_button.update_idletasks()
+        self.right_button.update_idletasks()
+
+        # 버튼 세로 중심 계산
+        button_y_position = canvas_height // 2
+
+        # 왼쪽 버튼 배치
+        self.left_button.place(
+            x=10,  # 고정된 X축 오프셋
+            y=button_y_position,
+            anchor="w"  # 왼쪽 기준
+        )
+
+        # 오른쪽 버튼 배치
+        self.right_button.place(
+            x=canvas_width - 10,  # 오른쪽 경계에서 오프셋
+            y=button_y_position,
+            anchor="e"  # 오른쪽 기준
+        )
+
+        # 디버깅 출력
+        print(f"DPI: {dpi}, Scale Factor: {scale_factor}")
+        print(f"Canvas Width (Scaled): {canvas_width}, Canvas Height (Scaled): {canvas_height}")
+        print(f"Button Y Position: {button_y_position}")
+        print(f"Left Button: {self.left_button.place_info()}")
+        print(f"Right Button: {self.right_button.place_info()}")
 
     def hide_navigation_buttons(self, event):
         self.left_button.place_forget()

@@ -10,7 +10,7 @@
 </p>
 
 <p>
-  <i>Note: It is optional but highly recommended to use <b>PyCharm</b> as the development environment for this project. PyCharm provides excellent tools for managing virtual environments, debugging, and organizing code efficiently.</i>
+  <i>* Note: It is optional but highly recommended to use <b>PyCharm</b> as the development environment for this project. PyCharm provides excellent tools for managing virtual environments, debugging, and organizing code efficiently.</i>
 </p>
 
 # 24OSS-Group26  
@@ -105,7 +105,10 @@ The directory structure for this repository is as follows:
      2. Click the **gear icon** and select **Add...**.  
      3. Choose **New Virtual Environment** and specify the location.  
      4. Click **OK** to create the environment.
-- **Note:** The instructions below are based on this setup and assume you are working in a new virtual environment within PyCharm.
+
+   <p align="left">
+     <i>* Note: The instructions below are based on this setup and assume you are working in a new virtual environment within PyCharm.</i>
+   </p>
 
 1. **Clone the Repository**  
    Clone this repository to your local machine:

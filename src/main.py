@@ -265,12 +265,12 @@ class FilterApp:
             anchor="e"  # 오른쪽 기준
         )
 
-        # 디버깅 출력
-        print(f"DPI: {dpi}, Scale Factor: {scale_factor}")
-        print(f"Canvas Width (Scaled): {canvas_width}, Canvas Height (Scaled): {canvas_height}")
-        print(f"Button Y Position: {button_y_position}")
-        print(f"Left Button: {self.left_button.place_info()}")
-        print(f"Right Button: {self.right_button.place_info()}")
+        # 디버깅 출력 주석으로 내비둠
+        #print(f"DPI: {dpi}, Scale Factor: {scale_factor}")
+        #print(f"Canvas Width (Scaled): {canvas_width}, Canvas Height (Scaled): {canvas_height}")
+        #print(f"Button Y Position: {button_y_position}")
+        #print(f"Left Button: {self.left_button.place_info()}")
+        #print(f"Right Button: {self.right_button.place_info()}")
 
     def hide_navigation_buttons(self, event):
         self.left_button.place_forget()

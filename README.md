@@ -151,7 +151,6 @@ Here are example images after applying the filter:
   <img src="README_img/14.png" alt="Filter Example 3">
   <img src="README_img/gif/output_20241118_195110.gif" alt="Filter Example gif 1">
   <img src="README_img/15.png" alt="Filter Example 5">
-  <img src="README_img/16.png" alt="Filter Example 5">
-  <img src="README_img/17.png" alt="Filter Example 5">
+  <img src="README_img/16.png" alt="Filter Example 6">
+  <img src="README_img/17.png" alt="Filter Example 7">
 </p>
-

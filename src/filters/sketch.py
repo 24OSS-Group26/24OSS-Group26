@@ -1,7 +1,7 @@
 import cv2
 
 
-def apply_sketch_filter(image):
+def apply_sketch(image):
     # Convert to grayscale
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 

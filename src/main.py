@@ -5,9 +5,9 @@ from tkinter import filedialog, messagebox
 import cv2
 from filters.mosaic import apply_mosaic_to_faces
 from filters.grayscale import apply_grayscale
-from filters.cartoon import apply_cartoon_filter
-from filters.sketch import apply_sketch_filter
-from filters.invert import apply_invert_filter
+from filters.cartoon import apply_cartoon
+from filters.sketch import apply_sketch
+from filters.invert import apply_invert
 from filters.blur import apply_blur
 from filters.edge_detection import apply_edge_detection
 from filters.sepia import apply_sepia
@@ -108,7 +108,7 @@ class FilterApp:
             ("Saturation", self.apply_saturation_filter),
             ("HDR", self.apply_hdr_filter),
             ("Vignette", self.apply_vignette_filter),
-            ("Portrait Mode", self.apply_portrait_mode),
+            ("Portrait Mode", self.apply_portrait_mode_filter),
             ("Remove Person", self.apply_remove_person_filter),
             ("Sticker", self.apply_sticker_filter),
         ]
@@ -283,13 +283,13 @@ class FilterApp:
         self.apply_filter(apply_grayscale, "Grayscale")
 
     def apply_cartoon_filter(self):
-        self.apply_filter(apply_cartoon_filter, "Cartoon")
+        self.apply_filter(apply_cartoon, "Cartoon")
 
     def apply_sketch_filter(self):
-        self.apply_filter(apply_sketch_filter, "Sketch")
+        self.apply_filter(apply_sketch, "Sketch")
 
     def apply_invert_filter(self):
-        self.apply_filter(apply_invert_filter, "Invert")
+        self.apply_filter(apply_invert, "Invert")
 
     def apply_blur_filter(self):
         self.apply_filter(apply_blur, "Blur")
@@ -312,7 +312,7 @@ class FilterApp:
     def apply_vignette_filter(self):
         self.apply_filter(apply_vignette, "Vignette")
 
-    def apply_portrait_mode(self):
+    def apply_portrait_mode_filter(self):
         self.apply_filter(apply_portrait_mode, "Portrait Mode")
 
     def apply_remove_person_filter(self):

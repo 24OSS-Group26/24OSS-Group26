@@ -1,7 +1,7 @@
 # 딥러닝 기반으로 변경하는 게 좋을 듯.
 import cv2
 
-def apply_cartoon_filter(image):
+def apply_cartoon(image):
     # Convert to grayscale
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 

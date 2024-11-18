@@ -56,7 +56,7 @@ The directory structure for this repository is as follows:
 │   └── output.gif                # Generated GIF example
 ├── test_img/                     # Directory containing sample images
 ├── requirements.txt              # List of dependencies (auto-generated)
-├── generate_requirements.py      # Script to generate requirements.txt
+├── generate_requirements.py      # Python script to generate requirements.txt
 ├── README.md                     # Project documentation
 └── LICENSE                       # License information
 </pre>

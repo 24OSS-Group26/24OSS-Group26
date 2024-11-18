@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 def create_gif(image_folder, output_gif_path, duration=600):
-    image_files = [f"{i}.png" for i in range(1, 19)]  # 1.png부터 18.png까지 예시 (필요에 따라 범위 조정)
+    image_files = [f"{i}.png" for i in range(1, 25)]  # 1.png부터 24.png까지 예시 (필요에 따라 범위 조정)
 
     images = []
     max_width = 0

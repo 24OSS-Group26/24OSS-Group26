@@ -103,11 +103,11 @@ The directory structure for this repository is as follows:
    - To set up a new virtual environment in PyCharm:  
      1. Go to **File > Settings > Project: <Project Name> > Python Interpreter**.  
      2. Click the **gear icon** and select **Add...**.  
-     3. Choose **New Virtual Environment** and specify the location.  
-     4. Click **OK** to create the environment.
+     3. Choose **New Virtual Environment**, specify the location, and ensure you select **Python 3.12** as the interpreter.  
+     4. Click **OK** to create the environment.  
 
    <p align="left">
-     <i>* Note: The instructions below are based on this setup and assume you are working in a new virtual environment within PyCharm.</i>
+     <i>*Note: The instructions below are based on this setup and assume you are working in a new virtual environment within PyCharm with Python 3.12.</i>
    </p>
 
 1. **Clone the Repository**  
@@ -146,12 +146,12 @@ Run the `main.py` script in the `src` folder to select and apply various filters
 Here are example images after applying the filter:
 
 <p align="center">
-  <img src="README_img/6.png" alt="Filter Example 1">
-  <img src="README_img/7.png" alt="Filter Example 2">
-  <img src="README_img/8.png" alt="Filter Example 3">
-  <img src="README_img/gif/output.gif" alt="Filter Example gif 1">
-  <img src="README_img/9.png" alt="Filter Example 5">
-  <img src="README_img/10.png" alt="Filter Example 5">
-  <img src="README_img/11.png" alt="Filter Example 5">
+  <img src="README_img/12.png" alt="Filter Example 1">
+  <img src="README_img/13.png" alt="Filter Example 2">
+  <img src="README_img/14.png" alt="Filter Example 3">
+  <img src="README_img/gif/output_20241118_195110.gif" alt="Filter Example gif 1">
+  <img src="README_img/15.png" alt="Filter Example 5">
+  <img src="README_img/16.png" alt="Filter Example 5">
+  <img src="README_img/17.png" alt="Filter Example 5">
 </p>
 
